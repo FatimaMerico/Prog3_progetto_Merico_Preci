@@ -20,6 +20,14 @@ public class Email implements Serializable {
         this.timestamp = LocalDateTime.now();
     }
 
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
     @Override
     public String toString() {
         return "Da: " + sender + "\nA: " + receiver + "\nOggetto: " + subject + "\n" + body + "\n" + timestamp;

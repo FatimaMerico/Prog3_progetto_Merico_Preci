@@ -28,13 +28,23 @@
 
     <center>
         <VBox spacing="10" style="-fx-padding: 10;">
+            <!-- VERSIONE PRECEDENTE CHE FUNZIONAVA
             <TableView fx:id="emailTable" >
                 <columns>
                     <TableColumn fx:id="receiversColumn" text="Mittente" prefWidth="200" />
                     <TableColumn fx:id="subjectColumn" text="Titolo" />
                     <TableColumn fx:id="previewColumn" text="Messaggio" />
                 </columns>
+            </TableView -->
+
+            <TableView fx:id="emailTable">
+                <columns>
+                    <TableColumn fx:id="receiversColumn" text="Mittente" prefWidth="200" />
+                    <TableColumn fx:id="subjectColumn" text="Oggetto" prefWidth="200" />
+                    <TableColumn fx:id="previewColumn" text="Anteprima" prefWidth="200" />
+                </columns>
             </TableView>
+
 
             <Label fx:id="errorLabel" text="Errore: Operazione non riuscita"
                    style="-fx-font-size: 14px; -fx-text-fill: red;"

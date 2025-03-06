@@ -6,9 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.regex.Pattern;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginController {
 
@@ -62,4 +63,24 @@ public class LoginController {
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }
+
+    private void handleServerResponse(String jsonResponse) {
+        try {
+            JSONObject response = new JSONObject(jsonResponse);
+            String status = response.getString("status");
+            String message = response.getString("message");
+
+            if ("SUCCESS".equals(status)) {
+                statusLabel.setText("Successo: " + message);
+                statusLabel.setStyle("-fx-text-fill: green;");
+            } else if ("ERROR".equals(status)) {
+                statusLabel.setText("Errore: " + message);
+                statusLabel.setStyle("-fx-text-fill: red;");
+            }
+        } catch (JSONException e) {
+            statusLabel.setText("Errore nel formato del messaggio.");
+            statusLabel.setStyle("-fx-text-fill: red;");
+        }
+    }
+
 }

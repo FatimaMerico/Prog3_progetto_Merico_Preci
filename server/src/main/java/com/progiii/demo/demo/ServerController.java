@@ -9,7 +9,6 @@ public class ServerController {
     @FXML private Button startButton;
     @FXML private Button stopButton;
     @FXML private ListView<String> logListView;
-
     private MailServer mailServer;
 
     @FXML
@@ -17,6 +16,8 @@ public class ServerController {
         mailServer = new MailServer(this);
         new Thread(mailServer).start();
         logMessage("Server avviato...");
+        startButton.setDisable(true);
+        stopButton.setDisable(false);
     }
 
     @FXML
@@ -24,6 +25,8 @@ public class ServerController {
         if (mailServer != null) {
             mailServer.stop();
             logMessage("Server arrestato.");
+            startButton.setDisable(false);
+            stopButton.setDisable(true);
         }
     }
 
