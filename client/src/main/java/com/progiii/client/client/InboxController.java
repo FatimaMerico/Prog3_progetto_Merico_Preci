@@ -1,41 +1,30 @@
 package com.progiii.client.client;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+
+import java.io.IOException;
 
 public class InboxController {
-    @FXML private TextField toField;
-    @FXML private TextField subjectField;
-    @FXML private TextArea messageBody;
 
-    @FXML
-    private void onSendButtonClick() {
-        System.out.println("Message Sent to: " + toField.getText());
+    @FXML private Label userMail;
+
+    public void setUserEmail(String email) {
+        userMail.setText(email);
     }
 
     @FXML
-    private void HandleScrivi() {
-        //cambiare scena
-        // vado in message.fxml
+    private void HandleScrivi() throws IOException {
+        Client.showMessageScene();
     }
 
     @FXML
-    private void HandleElimina() {
-        //richiesta al server per eliminare quella mail di quell'utente
-        //la tolgo dal json
+    private void HandleLogout() throws IOException {
+        Client.showLoginScene();
     }
 
     @FXML
-    private void HandleLogout() {
-        // cambio scena
-        // vado in login.fxml
+    private void HandleElimina() throws IOException {
+        System.out.println("Eliminazione email");
     }
-
-    @FXML
-    private void HandleMessaggio() {
-       //dom dice di gestirlo direttamente con java, senza mettere on Action in fxml
-
-    }
-
 }

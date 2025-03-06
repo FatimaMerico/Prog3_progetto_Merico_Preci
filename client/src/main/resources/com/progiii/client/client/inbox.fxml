@@ -22,7 +22,7 @@
     <left>
         <VBox spacing="10" style="-fx-padding: 10;">
             <Button  text="Scrivi" onAction="#HandleScrivi"/>
-            <Button text="Elimina" onAction="#HandleElimina" />
+            <Button text="Elimina"  onAction="#HandleElimina"/>
         </VBox>
     </left>
 

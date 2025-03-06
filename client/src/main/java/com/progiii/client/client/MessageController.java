@@ -1,27 +1,25 @@
 package com.progiii.client.client;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
+import java.io.IOException;
 
 public class MessageController {
-    @FXML
-    private TextField toField;
+
+    @FXML private TextField toField;
     @FXML private TextField subjectField;
     @FXML private TextArea messageBody;
 
-
     @FXML
-    //ritorno all'inbox
-    private void HandleIndietro() {
-        System.out.println("Message Sent to: " + toField.getText());
-        //cambia scene
+    private void HandleIndietro() throws IOException {
+        Client.showInboxScene("your-email@example.com"); // Placeholder email
     }
+
     @FXML
-
     private void HandleInvia() {
-        //parsifica la mail
-        //salva l'oggetto e il messaggio
-
+        System.out.println("Invio email a: " + toField.getText());
+        System.out.println("Oggetto: " + subjectField.getText());
+        System.out.println("Messaggio: " + messageBody.getText());
     }
 }
