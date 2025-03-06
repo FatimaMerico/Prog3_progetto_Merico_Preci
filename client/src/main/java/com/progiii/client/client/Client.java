@@ -43,12 +43,16 @@ public class Client extends Application {
         primaryStage.setScene(scene);
     }
 
-    public static void showMessageScene() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("message.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 300);
-        primaryStage.setTitle("CatMail - Nuovo Messaggio");
+    public static void showMessageScene(String userEmail) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Client.class.getResource("message.fxml"));
+        Scene scene = new Scene(loader.load());
+
+        MessageController controller = loader.getController();
+        controller.setUserEmail(userEmail); // Imposta l'email dell'utente
+
         primaryStage.setScene(scene);
     }
+
 
     public static void showReplyScene(String sender, String subject, String message) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("reply.fxml"));

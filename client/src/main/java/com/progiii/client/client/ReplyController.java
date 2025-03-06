@@ -13,6 +13,11 @@ public class ReplyController {
     @FXML private TextField subjectField;
     @FXML private TextArea messageBody;
 
+    private String userEmail;  // Variabile per memorizzare l'email dell'utente
+
+    public void setUserEmail(String email) {
+        this.userEmail = email;
+    }
     public void setupReply(String sender, String subject, String message) {
         daField.setText(sender);
         subjectField.setText("RE: " + subject);
@@ -21,6 +26,6 @@ public class ReplyController {
 
     @FXML
     private void HandleIndietro() throws IOException {
-        Client.showInboxScene("your-email@example.com");
+        Client.showInboxScene(userEmail); // Passa l'email corretta
     }
 }

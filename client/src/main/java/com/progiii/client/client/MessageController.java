@@ -11,9 +11,15 @@ public class MessageController {
     @FXML private TextField subjectField;
     @FXML private TextArea messageBody;
 
+    private String userEmail;  // Variabile per memorizzare l'email dell'utente
+
+    public void setUserEmail(String email) {
+        this.userEmail = email;
+    }
+
     @FXML
     private void HandleIndietro() throws IOException {
-        Client.showInboxScene("your-email@example.com"); // Placeholder email
+        Client.showInboxScene(userEmail); // Passa l'email corretta
     }
 
     @FXML

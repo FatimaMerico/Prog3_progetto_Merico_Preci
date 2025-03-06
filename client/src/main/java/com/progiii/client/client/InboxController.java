@@ -14,9 +14,11 @@ public class InboxController {
     }
 
     @FXML
+
     private void HandleScrivi() throws IOException {
-        Client.showMessageScene();
+        Client.showMessageScene(userMail.getText()); // Passa l'email corrente
     }
+
 
     @FXML
     private void HandleLogout() throws IOException {
