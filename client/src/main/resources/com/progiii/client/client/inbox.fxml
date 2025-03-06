@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.progiii.client.client.InboxController">
+
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
+            <Label text="Benvenuto," style="-fx-font-size: 18px; -fx-text-fill: black;" />
+            <Label fx:id="userMail" text="" style="-fx-font-size: 18px; -fx-text-fill: blue;" />
+            <Region fx:id="spacer1" HBox.hgrow="ALWAYS"/>
+
+            <Label text="Connessione:" style="-fx-font-size: 14px; -fx-text-fill: black;" />
+            <Label fx:id="connectionStatus" text="Attiva" style="-fx-font-size: 14px; -fx-text-fill: green;" />
+            <Region fx:id="spacer2" HBox.hgrow="ALWAYS"/>
+            <Button text="Logout" onAction="#HandleLogout" />
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <Button  text="Scrivi" onAction="#HandleScrivi"/>
+            <Button text="Elimina" onAction="#HandleElimina" />
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <TableView fx:id="emailTable" >
+                <columns>
+                    <TableColumn fx:id="receiversColumn" text="Mittente" prefWidth="200" />
+                    <TableColumn fx:id="subjectColumn" text="Titolo" />
+                    <TableColumn fx:id="previewColumn" text="Messaggio" />
+                </columns>
+            </TableView>
+
+            <Label fx:id="errorLabel" text="Errore: Operazione non riuscita"
+                   style="-fx-font-size: 14px; -fx-text-fill: red;"
+                   visible="false" />
+        </VBox>
+    </center>
+</BorderPane>

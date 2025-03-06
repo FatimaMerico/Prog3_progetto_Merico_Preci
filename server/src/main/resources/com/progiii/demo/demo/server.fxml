@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.HBox?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.progiii.demo.demo.serverController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <Label text="Server Controller" />
+    <HBox alignment="CENTER" spacing="30">
+    <Button fx:id="startButton" text="Avvia Server" onAction="#startServer"
+            style="-fx-background-color: #61a861; -fx-border-color: black"/>
+
+    <Button fx:id="stopButton" text="Spegni Server" onAction="#stopServer"
+            style="-fx-background-color: #d45656; -fx-border-color: black"/>
+
+    </HBox>
+
+    <ListView fx:id="logListView" prefHeight="600.0" prefWidth="600.0" />
+</VBox>
