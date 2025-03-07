@@ -15,7 +15,7 @@ import java.io.IOException;
 public class InboxController {
     @FXML private Label userMail; // Mostra l'email dell'utente
     @FXML private TableView<JSONObject> emailTable;
-    @FXML private TableColumn<JSONObject, String> receiversColumn;
+    @FXML private TableColumn<JSONObject, String> senderColumn;
     @FXML private TableColumn<JSONObject, String> subjectColumn;
     @FXML private TableColumn<JSONObject, String> previewColumn;
 
@@ -28,8 +28,8 @@ public class InboxController {
     @FXML
     public void initialize() {
         // Collega le colonne ai dati JSON
-        receiversColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getString("receiver")));
+        senderColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getString("sender")));
         subjectColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getString("subject")));
         previewColumn.setCellValueFactory(cellData ->

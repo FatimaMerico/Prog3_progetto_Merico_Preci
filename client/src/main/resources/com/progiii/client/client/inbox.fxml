@@ -39,7 +39,7 @@
 
             <TableView fx:id="emailTable">
                 <columns>
-                    <TableColumn fx:id="receiversColumn" text="Mittente" prefWidth="200" />
+                    <TableColumn fx:id="senderColumn" text="Mittente" prefWidth="200" />
                     <TableColumn fx:id="subjectColumn" text="Oggetto" prefWidth="200" />
                     <TableColumn fx:id="previewColumn" text="Anteprima" prefWidth="200" />
                 </columns>

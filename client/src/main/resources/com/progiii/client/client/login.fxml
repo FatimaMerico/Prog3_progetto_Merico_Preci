@@ -11,5 +11,5 @@
   </padding>
   <TextField fx:id="emailField" promptText="Inserisci la tua email" />
   <Button fx:id="loginButton" text="Accedi" onAction="#handleLogin" />
-  <Label fx:id="statusLabel" text="Stato: Non connesso" />
+  <Label fx:id="statusLabel" text=" " />
 </VBox>

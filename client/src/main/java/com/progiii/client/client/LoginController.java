@@ -6,7 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.regex.Pattern;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +27,7 @@ public class LoginController {
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 
     @FXML
-    private void handleLogin() {
+    public void handleLogin() {
         String email = emailField.getText().trim();
 
         if (!isValidEmail(email)) {
@@ -31,16 +36,34 @@ public class LoginController {
             return;
         }
 
-        // Simulazione di connessione al server (qui andrà la logica vera)
-        boolean serverConnected = true;
+        try (Socket socket = new Socket("localhost", 12345);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-        if (serverConnected) {
-            changeSceneToInbox(email);
-        } else {
-            statusLabel.setText("Errore: Impossibile connettersi al server.");
+            // Invia il login email
+            out.println(email);  // Invia l'email al server per il login
+
+            // Leggi la risposta dal server
+            String response = in.readLine();
+            if (response != null) {
+                System.out.println(response);  // Stampa la risposta per il debug
+                if (response.contains("SUCCESS")) {
+                    changeSceneToInbox(email);
+                } else {
+                    statusLabel.setText("Errore: " + response);
+                    statusLabel.setStyle("-fx-text-fill: red;");
+                }
+            }
+
+        } catch (IOException e) {
+            statusLabel.setText("Errore di connessione: " + e.getMessage());
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }
+
+
+
+
 
     private boolean isValidEmail(String email) {
         return Pattern.matches(EMAIL_REGEX, email);
@@ -82,5 +105,40 @@ public class LoginController {
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }
+
+    private boolean isServerActive() {
+        try (Socket socket = new Socket("localhost", 12345)) {
+            return true; // Connessione riuscita
+        } catch (IOException e) {
+            return false; // Connessione fallita
+        }
+    }
+
+    private boolean authenticateWithServer(String email) {
+        try (Socket socket = new Socket("localhost", 12345);
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+            out.println(email); // Invia l'email al server
+            System.out.println("CLIENT: Inviato email -> " + email); // Aggiungi un log per verificare l'invio dell'email
+
+            String response = in.readLine(); // Legge la risposta dal server
+            System.out.println("CLIENT: Ricevuto -> " + response); // Log per la risposta del server
+
+            if (response != null && response.contains("SUCCESS")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+
+
 
 }
