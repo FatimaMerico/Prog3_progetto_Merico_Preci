@@ -21,8 +21,8 @@
 
     <left>
         <VBox spacing="10" style="-fx-padding: 10;">
-            <Button  text="Scrivi" onAction="#HandleScrivi"/>
-            <Button text="Elimina"  onAction="#HandleElimina"/>
+            <Button  fx:id="sendButton"  text="Scrivi" onAction="#HandleScrivi"/>
+            <Button fx:id="deleteButton" text="Elimina"  onAction="#HandleElimina"/>
         </VBox>
     </left>
 

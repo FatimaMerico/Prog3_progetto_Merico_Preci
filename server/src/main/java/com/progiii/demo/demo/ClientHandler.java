@@ -30,7 +30,7 @@ public class ClientHandler implements Runnable {
                 String loginEmail = in.readLine();
                 if (!isUserRegistered(loginEmail)) {
                     sendError("Utente non registrato");
-                    controller.logMessage("Tentativo di accesso fallito per: " + loginEmail);
+                    //controller.logMessage("Tentativo di accesso fallito per: " + loginEmail);
                     return;
                 }
                 sendSuccess("Accesso effettuato con successo per: " + loginEmail);
@@ -79,7 +79,7 @@ public class ClientHandler implements Runnable {
         try (BufferedReader reader = new BufferedReader(new FileReader(USERS_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println("Server: verificando -> " + line); // Log per ogni linea letta
+                //System.out.println("Server: verificando -> " + line); // Log per ogni linea letta
                 if (line.trim().equalsIgnoreCase(email)) {
                     return true;
                 }
