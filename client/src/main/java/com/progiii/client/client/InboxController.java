@@ -35,11 +35,14 @@ public class InboxController {
     private PrintWriter out;
     private Scanner in;
 
-    private ObservableList<JSONObject> emailList;
+    private static ObservableList<JSONObject> emailList = FXCollections.observableArrayList();
+
     private ScheduledExecutorService scheduler;
 
     public InboxController() {
-        emailList = FXCollections.observableArrayList();
+        if (emailList == null) {
+            emailList = FXCollections.observableArrayList();
+        }
     }
 
     @FXML
@@ -82,11 +85,12 @@ public class InboxController {
             boolean serverOnline = checkServerConnection("localhost", 12345);
             Platform.runLater(() -> updateUI(serverOnline));
             if (serverOnline) fetchEmails();
-        }, 0, 2, TimeUnit.SECONDS);
+        }, 0, 1, TimeUnit.SECONDS);
     }
 
     private boolean checkServerConnection(String host, int port) {
         try (Socket socket = new Socket(host, port)) {
+            emailTable.refresh();
             return true;
         } catch (IOException e) {
             return false;
@@ -133,25 +137,14 @@ public class InboxController {
 
 
     private void handleServerResponse(String response) {
-      //  System.out.println("Risposta dal server: " + response);
-
         try {
             JSONArray emailArray = new JSONArray(response);
 
             for (int i = 0; i < emailArray.length(); i++) {
                 JSONObject email = emailArray.getJSONObject(i);
-
-                // Rimuovi lo stato (se presente) e considera tutte le email
-              //  email.remove("status");
-
-                // Aggiungi solo se l'email non è già presente nella lista
-                boolean alreadyExists = emailList.stream().anyMatch(e -> e.getString("subject").equals(email.getString("subject"))
-                        && e.getString("sender").equals(email.getString("sender")));
-
-               if (!alreadyExists) {
-                    emailList.add(email);
-                }
+                emailList.add(email); // Aggiunge direttamente tutte le email ricevute
             }
+
 
             emailTable.refresh(); // Aggiorna la vista della tabella
 
@@ -160,6 +153,7 @@ public class InboxController {
             e.printStackTrace();
         }
     }
+
 
 
 

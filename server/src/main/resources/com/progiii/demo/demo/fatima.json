@@ -69,7 +69,7 @@
         "type": "EMAIL",
         "body": "msomma",
         "timestamp": "2025-03-11T07:43:41.119244",
-        "status": "DA LEGGERE"
+        "status": "LETTO"
     },
     {
         "receiver": "fatima@catmail.com",
@@ -78,7 +78,7 @@
         "type": "EMAIL",
         "body": "ciaoooooo",
         "timestamp": "2025-03-11T12:24:11.626098",
-        "status": "DA LEGGERE"
+        "status": "LETTO"
     },
     {
         "receiver": "fatima@catmail.com , monika@catmail.com",
@@ -87,6 +87,33 @@
         "type": "EMAIL",
         "body": "\n---- Messaggio originale ----\ncambiatooo\nProva coin risposta 2 destinatari",
         "timestamp": "2025-03-11T14:42:03.987573",
-        "status": "DA LEGGERE"
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com,fatima@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "rispomdi all",
+        "type": "EMAIL",
+        "body": "gcdwjgwdxjgejcgwdkcudskch",
+        "timestamp": "2025-03-11T15:20:19.402557",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "jdjssm",
+        "type": "EMAIL",
+        "body": "skkak",
+        "timestamp": "2025-03-11T15:46:32.410420",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com, persona@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "prova filmalissisjjdssjsj",
+        "type": "EMAIL",
+        "body": "sjdsjkdajkjassassjkjsj",
+        "timestamp": "2025-03-11T16:31:44.567385",
+        "status": "LETTO"
     }
 ]

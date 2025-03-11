@@ -52,14 +52,19 @@ public class ClientHandler implements Runnable {
                         case "LOGIN":
                             String loginEmail = jsonRequest.getString("email");
                             controller.logMessage("Tentativo di login con email: " + loginEmail);
+
                             if (!isUserRegistered(loginEmail)) {
                                 sendError("Utente non registrato");
                             } else {
                                 userEmail = loginEmail;
                                 controller.logMessage("Accesso effettuato con successo per: " + loginEmail);
                                 sendSuccess("Accesso effettuato con successo per: " + loginEmail);
+
+                                // Aggiorna tutte le email a "DA LEGGERE"
+                                markAllEmailsAsUnread(loginEmail);
                             }
                             break;
+
 
 
                         case "PING":
@@ -138,9 +143,10 @@ public class ClientHandler implements Runnable {
             // Scansiona le email e raccoglie quelle con status "DA LEGGERE"
             for (int i = 0; i < emailArray.length(); i++) {
                 JSONObject email = emailArray.getJSONObject(i);
-               // if ("DA LEGGERE".equals(email.getString("status"))) {
+                if ("DA LEGGERE".equals(email.getString("status"))) {
                     unreadEmails.put(email);
-                   // email.put("status", "LETTO"); // Aggiorna lo stato a LETTO
+                    email.put("status", "LETTO"); // Aggiorna lo stato a LETTO
+                }
 
             }
 
@@ -151,7 +157,7 @@ public class ClientHandler implements Runnable {
             // Sovrascrive il file con le email aggiornate
             Files.write(filePath, emailArray.toString(4).getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
 
-            System.out.println("PING: Inviate " + unreadEmails.length() + " email non lette a " + userEmail);
+            //System.out.println("PING: Inviate " + unreadEmails.length() + " email non lette a " + userEmail);
 
         } catch (Exception e) {
             System.out.println("Errore nella gestione del PING: " + e.getMessage());
@@ -274,6 +280,42 @@ public class ClientHandler implements Runnable {
         } catch (Exception e) {
             controller.logMessage("Errore durante l'eliminazione dell'email: " + e.getMessage());
             sendError("Errore durante l'eliminazione dell'email.");
+            e.printStackTrace();
+        }
+    }
+    private void markAllEmailsAsUnread(String userEmail) {
+        try {
+            String filename = userEmail.substring(0, userEmail.indexOf('@')) + ".json";
+            Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
+
+            if (!Files.exists(filePath)) {
+                return; // Se il file non esiste, non c'è nulla da fare
+            }
+
+            // Leggi il contenuto del file JSON
+            List<String> lines = Files.readAllLines(filePath);
+            String content = String.join("", lines).trim();
+
+            if (content.isEmpty()) {
+                return;
+            }
+
+            // Converti il contenuto in un array JSON
+            JSONArray emailArray = new JSONArray(content);
+
+            // Imposta tutte le email come "DA LEGGERE"
+            for (int i = 0; i < emailArray.length(); i++) {
+                JSONObject email = emailArray.getJSONObject(i);
+                email.put("status", "DA LEGGERE");
+            }
+
+            // Sovrascrive il file con le email aggiornate
+            Files.write(filePath, emailArray.toString(4).getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+
+            System.out.println("LOGIN: Tutte le email di " + userEmail + " sono state impostate su 'DA LEGGERE'.");
+
+        } catch (Exception e) {
+            System.out.println("Errore nell'aggiornamento delle email a 'DA LEGGERE' per " + userEmail + ": " + e.getMessage());
             e.printStackTrace();
         }
     }

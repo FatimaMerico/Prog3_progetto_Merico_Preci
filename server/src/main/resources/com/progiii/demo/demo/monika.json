@@ -6,7 +6,7 @@
         "type": "EMAIL",
         "body": "doppisssss",
         "timestamp": "2025-03-11T11:40:14.319424",
-        "status": "DA LEGGERE"
+        "status": "LETTO"
     },
     {
         "receiver": "monika@catmail.com",
@@ -15,7 +15,7 @@
         "type": "EMAIL",
         "body": "ciaoo leoooo",
         "timestamp": "2025-03-11T12:25:49.584136",
-        "status": "DA LEGGERE"
+        "status": "LETTO"
     },
     {
         "receiver": "monika@catmail.com",
@@ -24,7 +24,7 @@
         "type": "EMAIL",
         "body": "ckdkksksks",
         "timestamp": "2025-03-11T12:32:02.194636",
-        "status": "DA LEGGERE"
+        "status": "LETTO"
     },
     {
         "receiver": "monika@catmail.com",
@@ -33,7 +33,7 @@
         "type": "EMAIL",
         "body": "jsajsa",
         "timestamp": "2025-03-11T12:33:20.424893",
-        "status": "DA LEGGERE"
+        "status": "LETTO"
     },
     {
         "receiver": "monika@catmail.com , persona@catmail.com",
@@ -42,7 +42,7 @@
         "type": "EMAIL",
         "body": "monika@catmail.com , persona@catmail.com",
         "timestamp": "2025-03-11T14:35:15.028670",
-        "status": "DA LEGGERE"
+        "status": "LETTO"
     },
     {
         "receiver": "fatima@catmail.com , monika@catmail.com",
@@ -51,6 +51,51 @@
         "type": "EMAIL",
         "body": "\n---- Messaggio originale ----\ncambiatooo\nProva coin risposta 2 destinatari",
         "timestamp": "2025-03-11T14:42:03.987573",
-        "status": "DA LEGGERE"
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com,fatima@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "rispomdi all",
+        "type": "EMAIL",
+        "body": "gcdwjgwdxjgejcgwdkcudskch",
+        "timestamp": "2025-03-11T15:20:19.402557",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com, persona@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "Re: rispomdi all",
+        "type": "EMAIL",
+        "body": "ricevuto",
+        "timestamp": "2025-03-11T15:21:06.816783",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "prova finaleeeee",
+        "type": "EMAIL",
+        "body": "cnkdcjkjksdjkssjkajksankjas",
+        "timestamp": "2025-03-11T15:33:47.641031",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "aiutttooo",
+        "type": "EMAIL",
+        "body": "helppp",
+        "timestamp": "2025-03-11T15:39:41.966712",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "persona@catmail.com, monika@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "Re: prova filmalissisjjdssjsj",
+        "type": "EMAIL",
+        "body": "\n---- Messaggio originale ----\nsjdsjkdajkjassassjkjsj\n\nrispostaaaaaaa",
+        "timestamp": "2025-03-11T16:32:11.182021",
+        "status": "LETTO"
     }
 ]
