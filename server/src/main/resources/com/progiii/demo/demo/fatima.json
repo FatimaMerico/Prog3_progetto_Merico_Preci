@@ -1,0 +1,92 @@
+[
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "ciao",
+        "type": "EMAIL",
+        "body": "dknkjs",
+        "timestamp": "2025-03-10T22:02:50.080178",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "cskks",
+        "type": "EMAIL",
+        "body": "skjlskasa",
+        "timestamp": "2025-03-10T22:10:04.807240",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "cksl",
+        "type": "EMAIL",
+        "body": "skjsajks",
+        "timestamp": "2025-03-10T22:10:26.941302",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "kcjskjc",
+        "type": "EMAIL",
+        "body": "dkmsskks",
+        "timestamp": "2025-03-10T22:14:58.856871",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "sdkj",
+        "type": "EMAIL",
+        "body": "ckjjds",
+        "timestamp": "2025-03-10T22:15:17.219815",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "sksjs",
+        "type": "EMAIL",
+        "body": "dlksks",
+        "timestamp": "2025-03-10T22:19:46.282130",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "ksjjk",
+        "type": "EMAIL",
+        "body": "ksajas",
+        "timestamp": "2025-03-10T22:20:29.772070",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "kks",
+        "type": "EMAIL",
+        "body": "msomma",
+        "timestamp": "2025-03-11T07:43:41.119244",
+        "status": "DA LEGGERE"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "provaaaaaa",
+        "type": "EMAIL",
+        "body": "ciaoooooo",
+        "timestamp": "2025-03-11T12:24:11.626098",
+        "status": "DA LEGGERE"
+    },
+    {
+        "receiver": "fatima@catmail.com , monika@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "Re: inviato doppio",
+        "type": "EMAIL",
+        "body": "\n---- Messaggio originale ----\ncambiatooo\nProva coin risposta 2 destinatari",
+        "timestamp": "2025-03-11T14:42:03.987573",
+        "status": "DA LEGGERE"
+    }
+]

@@ -5,21 +5,26 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class InboxController {
-    @FXML private Label userMail; // Mostra l'email dell'utente
+    @FXML private Label userMail;
     @FXML private Label connectionStatus;
     @FXML private TableView<JSONObject> emailTable;
     @FXML private TableColumn<JSONObject, String> senderColumn;
@@ -27,6 +32,8 @@ public class InboxController {
     @FXML private TableColumn<JSONObject, String> previewColumn;
     @FXML private Button sendButton;
     @FXML private Button deleteButton;
+    private PrintWriter out;
+    private Scanner in;
 
     private ObservableList<JSONObject> emailList;
     private ScheduledExecutorService scheduler;
@@ -37,7 +44,6 @@ public class InboxController {
 
     @FXML
     public void initialize() {
-        // Collega le colonne ai dati JSON
         senderColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getString("sender")));
         subjectColumn.setCellValueFactory(cellData ->
@@ -46,24 +52,44 @@ public class InboxController {
                 new SimpleStringProperty(cellData.getValue().getString("body")));
 
         emailTable.setItems(emailList);
-
-        // Avvia il controllo del server ogni 2 secondi
         startServerCheck();
+
+        // Aggiungi il Mouse Listener alla TableView
+        emailTable.setRowFactory(tv -> {
+            TableRow<JSONObject> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty()) {
+                    JSONObject selectedEmail = row.getItem();
+
+                    // Singolo click: abilita il pulsante di eliminazione
+                    if (event.getClickCount() == 1) {
+                        deleteButton.setDisable(false);
+                    }
+
+                    // Doppio click: apre la scena di risposta (reply.fxml)
+                    if (event.getClickCount() == 2) {
+                        openReplyScene(selectedEmail);
+                    }
+                }
+            });
+            return row;
+        });
     }
 
     private void startServerCheck() {
         scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
-            boolean serverOnline = checkServerConnection("localhost", 12345); // Cambia IP e porta se necessario
+            boolean serverOnline = checkServerConnection("localhost", 12345);
             Platform.runLater(() -> updateUI(serverOnline));
+            if (serverOnline) fetchEmails();
         }, 0, 2, TimeUnit.SECONDS);
     }
 
     private boolean checkServerConnection(String host, int port) {
         try (Socket socket = new Socket(host, port)) {
-            return true; // Connessione riuscita
+            return true;
         } catch (IOException e) {
-            return false; // Connessione fallita
+            return false;
         }
     }
 
@@ -76,34 +102,73 @@ public class InboxController {
         } else {
             connectionStatus.setText("Server NON Connesso");
             connectionStatus.setStyle("-fx-text-fill: red;");
-            sendButton.setDisable(true);
+            sendButton.setDisable(false);
             deleteButton.setDisable(true);
         }
     }
 
-    public void stopServerCheck() {
-        if (scheduler != null) {
-            scheduler.shutdown();
+    private void fetchEmails() {
+        try (Socket socket = new Socket("localhost", 12345);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             Scanner in = new Scanner(socket.getInputStream())) {
+
+            // Creazione della richiesta PING sotto forma di JSON
+            JSONObject pingRequest = new JSONObject();
+            pingRequest.put("type", "PING");
+            pingRequest.put("sender", userMail.getText());
+
+            // Invio della richiesta PING al server
+            out.println(pingRequest.toString());
+
+            // Lettura della risposta dal server (Lista di email)
+            if (in.hasNextLine()) {
+                String response = in.nextLine();
+                Platform.runLater(() -> handleServerResponse(response));
+            }
+
+        } catch (IOException e) {
+            System.out.println("Errore ricezione email: " + e.getMessage());
         }
     }
-    public void setUserEmail(String email) {
-        userMail.setText(email);
-    }
 
-    public void loadEmails(ObservableList<String> emailData) {
-        emailList.clear(); // Pulisce la lista esistente
-        for (String emailJson : emailData) {
-            emailList.add(new JSONObject(emailJson)); // Aggiunge ogni email come JSONObject
+
+    private void handleServerResponse(String response) {
+      //  System.out.println("Risposta dal server: " + response);
+
+        try {
+            JSONArray emailArray = new JSONArray(response);
+
+            for (int i = 0; i < emailArray.length(); i++) {
+                JSONObject email = emailArray.getJSONObject(i);
+
+                // Rimuovi lo stato (se presente) e considera tutte le email
+              //  email.remove("status");
+
+                // Aggiungi solo se l'email non è già presente nella lista
+                boolean alreadyExists = emailList.stream().anyMatch(e -> e.getString("subject").equals(email.getString("subject"))
+                        && e.getString("sender").equals(email.getString("sender")));
+
+               if (!alreadyExists) {
+                    emailList.add(email);
+                }
+            }
+
+            emailTable.refresh(); // Aggiorna la vista della tabella
+
+        } catch (Exception e) {
+            System.out.println("Errore nella gestione della risposta: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public void addEmail(String emailJson) {
-        emailList.add(new JSONObject(emailJson)); // Aggiunge una nuova email dinamicamente
-    }
+
+
 
     @FXML
     private void HandleScrivi() throws IOException {
-        Client.showMessageScene(userMail.getText()); // Passa l'email corrente
+        // Dopo aver inviato la mail, potresti voler ricaricare le email
+        Client.showMessageScene(userMail.getText());
+      //  fetchEmails();  // Questo forzerà un nuovo recupero delle email
     }
 
     @FXML
@@ -112,8 +177,87 @@ public class InboxController {
     }
 
     @FXML
-    private void HandleElimina() throws IOException {
-        System.out.println("Eliminazione email");
+
+    private void HandleElimina() {
+        JSONObject selectedEmail = emailTable.getSelectionModel().getSelectedItem();
+
+        if (selectedEmail == null) {
+            System.out.println("Nessuna email selezionata per l'eliminazione.");
+            return;
+        }
+
+        try (Socket socket = new Socket("localhost", 12345);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+            // Creiamo l'oggetto JSON per la richiesta
+            JSONObject deleteRequest = new JSONObject();
+            deleteRequest.put("type", "ELIMINA");
+            deleteRequest.put("richiedente", userMail.getText());
+
+            // Creiamo un oggetto per l'email da eliminare
+            JSONObject emailData = new JSONObject();
+            emailData.put("sender", selectedEmail.getString("sender"));
+            emailData.put("subject", selectedEmail.getString("subject"));
+            emailData.put("body", selectedEmail.getString("body"));
+
+            deleteRequest.put("email_da_cancellare", emailData);
+
+            // Invia il JSON al server
+            out.println(deleteRequest.toString());
+            System.out.println("Richiesta di eliminazione inviata: " + deleteRequest);
+
+            // Leggi la risposta del server
+            String response = in.readLine();
+            if (response != null) {
+                System.out.println("Risposta del server: " + response);  // Stampa la risposta per il debug
+                if (response.contains("SUCCESS")) {
+                    // Se la risposta è positiva, rimuovi l'email dalla lista (UI)
+                    emailTable.getItems().remove(selectedEmail);
+                    System.out.println("Email eliminata con successo.");
+                } else {
+                    System.out.println("Errore nell'eliminazione dell'email.");
+                }
+            } else {
+                System.out.println("Nessuna risposta dal server.");
+            }
+        } catch (IOException e) {
+            System.out.println("Errore nella comunicazione con il server: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void openReplyScene(JSONObject email) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("reply.fxml"));
+            Parent root = loader.load();
+
+            // Ottenere il controller della nuova scena
+            ReplyController replyController = loader.getController();
+
+            // Ottenere la lista completa dei destinatari
+
+
+            // Passare i dettagli della mail selezionata alla Reply Scene
+            replyController.setReplyFields(email);
+
+            replyController.setUserEmail(userMail.getText());
+
+            // Mostra la nuova scena
+            Stage stage = (Stage) emailTable.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel caricamento della scena di risposta.");
+        }
+    }
+
+
+    public void setUserEmail(String email) {
+        userMail.setText(email);
     }
 
 }

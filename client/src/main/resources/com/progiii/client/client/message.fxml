@@ -17,7 +17,7 @@
 
     <HBox>
         <Label text="A:                " style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-        <TextField fx:id="AField" promptText="Destinatari in cc..." HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="toField" promptText="Destinatari in cc..." HBox.hgrow="ALWAYS"/>
     </HBox>
 
     <HBox>

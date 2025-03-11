@@ -1,0 +1,38 @@
+[
+    {
+        "receiver": "persona@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "a personaaaa",
+        "type": "EMAIL",
+        "body": "ddidjdnidjiiddi",
+        "timestamp": "2025-03-11T07:45:47.401928",
+        "status": "DA LEGGERE"
+    },
+    {
+        "receiver": "persona@catmail.com, monika@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "oggg",
+        "type": "EMAIL",
+        "body": "doppisssss",
+        "timestamp": "2025-03-11T11:40:14.319424",
+        "status": "DA LEGGERE"
+    },
+    {
+        "receiver": "fatima@catmail.com, persona@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "prova con 2 ",
+        "type": "EMAIL",
+        "body": "ciao pietrinoo",
+        "timestamp": "2025-03-11T12:44:36.226164",
+        "status": "DA LEGGERE"
+    },
+    {
+        "receiver": "monika@catmail.com , persona@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "inviato doppio",
+        "type": "EMAIL",
+        "body": "monika@catmail.com , persona@catmail.com",
+        "timestamp": "2025-03-11T14:35:15.028670",
+        "status": "DA LEGGERE"
+    }
+]

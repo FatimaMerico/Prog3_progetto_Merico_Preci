@@ -54,14 +54,6 @@ public class Client extends Application {
     }
 
 
-    public static void showReplyScene(String sender, String subject, String message) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("reply.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 300);
-        ReplyController controller = fxmlLoader.getController();
-        controller.setupReply(sender, subject, message);
-        primaryStage.setTitle("CatMail - Rispondi");
-        primaryStage.setScene(scene);
-    }
 
     public static void main(String[] args) {
         launch();

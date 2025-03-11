@@ -1,0 +1,56 @@
+[
+    {
+        "receiver": "persona@catmail.com, monika@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "oggg",
+        "type": "EMAIL",
+        "body": "doppisssss",
+        "timestamp": "2025-03-11T11:40:14.319424",
+        "status": "DA LEGGERE"
+    },
+    {
+        "receiver": "monika@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "leoooo",
+        "type": "EMAIL",
+        "body": "ciaoo leoooo",
+        "timestamp": "2025-03-11T12:25:49.584136",
+        "status": "DA LEGGERE"
+    },
+    {
+        "receiver": "monika@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "coooo",
+        "type": "EMAIL",
+        "body": "ckdkksksks",
+        "timestamp": "2025-03-11T12:32:02.194636",
+        "status": "DA LEGGERE"
+    },
+    {
+        "receiver": "monika@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "smla",
+        "type": "EMAIL",
+        "body": "jsajsa",
+        "timestamp": "2025-03-11T12:33:20.424893",
+        "status": "DA LEGGERE"
+    },
+    {
+        "receiver": "monika@catmail.com , persona@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "inviato doppio",
+        "type": "EMAIL",
+        "body": "monika@catmail.com , persona@catmail.com",
+        "timestamp": "2025-03-11T14:35:15.028670",
+        "status": "DA LEGGERE"
+    },
+    {
+        "receiver": "fatima@catmail.com , monika@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "Re: inviato doppio",
+        "type": "EMAIL",
+        "body": "\n---- Messaggio originale ----\ncambiatooo\nProva coin risposta 2 destinatari",
+        "timestamp": "2025-03-11T14:42:03.987573",
+        "status": "DA LEGGERE"
+    }
+]

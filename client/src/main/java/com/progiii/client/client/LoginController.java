@@ -40,8 +40,13 @@ public class LoginController {
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-            // Invia il login email
-            out.println(email);  // Invia l'email al server per il login
+            // Creiamo l'oggetto JSON con l'email
+            JSONObject loginRequest = new JSONObject();
+            loginRequest.put("type", "LOGIN");
+            loginRequest.put("email", email);  // Aggiungiamo l'email
+
+            // Invia l'oggetto JSON al server
+            out.println(loginRequest.toString());
 
             // Leggi la risposta dal server
             String response = in.readLine();
@@ -60,6 +65,7 @@ public class LoginController {
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }
+
 
 
 
