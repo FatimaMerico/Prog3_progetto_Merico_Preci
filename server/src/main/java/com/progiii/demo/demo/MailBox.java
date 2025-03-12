@@ -3,13 +3,11 @@ package com.progiii.demo.demo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MailBox {
     private static final String FILE_PATH = "emails.json";
 
-    public static void saveEmail(String emailJson) {
+    /*public static void saveEmail(String emailJson) {
         JSONArray emails = loadEmails();
         emails.put(new JSONObject(emailJson));
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
@@ -30,5 +28,5 @@ public class MailBox {
         } catch (IOException e) {
             return new JSONArray(); // Restituisce un array vuoto in caso di errore
         }
-    }
+    }*/
 }

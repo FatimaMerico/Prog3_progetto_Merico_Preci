@@ -22,8 +22,6 @@ public class MailServer implements Runnable {
 
             while (running) {
                 Socket clientSocket = serverSocket.accept();
-               // controller.logMessage("Nuovo client connesso: " + clientSocket.getInetAddress());
-
                 ClientHandler clientHandler = new ClientHandler(clientSocket, controller);
                 new Thread(clientHandler).start();
             }

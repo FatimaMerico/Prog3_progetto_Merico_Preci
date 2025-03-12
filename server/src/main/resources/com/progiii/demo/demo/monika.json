@@ -1,101 +1,42 @@
 [
     {
-        "receiver": "persona@catmail.com, monika@catmail.com",
+        "receiver": "monika@catmail.com",
         "sender": "fatima@catmail.com",
-        "subject": "oggg",
+        "subject": "mailssss",
+        "id": 1920543276,
         "type": "EMAIL",
-        "body": "doppisssss",
-        "timestamp": "2025-03-11T11:40:14.319424",
+        "body": "MAILSSS",
+        "timestamp": "2025-03-12T17:35:23.370981700",
         "status": "LETTO"
     },
     {
         "receiver": "monika@catmail.com",
         "sender": "fatima@catmail.com",
-        "subject": "leoooo",
+        "subject": "notification",
+        "id": 796544445,
         "type": "EMAIL",
-        "body": "ciaoo leoooo",
-        "timestamp": "2025-03-11T12:25:49.584136",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com",
-        "sender": "monika@catmail.com",
-        "subject": "coooo",
-        "type": "EMAIL",
-        "body": "ckdkksksks",
-        "timestamp": "2025-03-11T12:32:02.194636",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com",
-        "sender": "monika@catmail.com",
-        "subject": "smla",
-        "type": "EMAIL",
-        "body": "jsajsa",
-        "timestamp": "2025-03-11T12:33:20.424893",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com , persona@catmail.com",
-        "sender": "fatima@catmail.com",
-        "subject": "inviato doppio",
-        "type": "EMAIL",
-        "body": "monika@catmail.com , persona@catmail.com",
-        "timestamp": "2025-03-11T14:35:15.028670",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "fatima@catmail.com , monika@catmail.com",
-        "sender": "monika@catmail.com",
-        "subject": "Re: inviato doppio",
-        "type": "EMAIL",
-        "body": "\n---- Messaggio originale ----\ncambiatooo\nProva coin risposta 2 destinatari",
-        "timestamp": "2025-03-11T14:42:03.987573",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com,fatima@catmail.com",
-        "sender": "persona@catmail.com",
-        "subject": "rispomdi all",
-        "type": "EMAIL",
-        "body": "gcdwjgwdxjgejcgwdkcudskch",
-        "timestamp": "2025-03-11T15:20:19.402557",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com, persona@catmail.com",
-        "sender": "fatima@catmail.com",
-        "subject": "Re: rispomdi all",
-        "type": "EMAIL",
-        "body": "ricevuto",
-        "timestamp": "2025-03-11T15:21:06.816783",
+        "body": "NOTIFICATION",
+        "timestamp": "2025-03-12T17:54:08.714402500",
         "status": "LETTO"
     },
     {
         "receiver": "monika@catmail.com",
         "sender": "fatima@catmail.com",
-        "subject": "prova finaleeeee",
+        "subject": "BLAAAAA",
+        "id": 256596953,
         "type": "EMAIL",
-        "body": "cnkdcjkjksdjkssjkajksankjas",
-        "timestamp": "2025-03-11T15:33:47.641031",
+        "body": "BUIHSDUIV",
+        "timestamp": "2025-03-12T17:54:38.720679800",
         "status": "LETTO"
     },
     {
         "receiver": "monika@catmail.com",
         "sender": "fatima@catmail.com",
-        "subject": "aiutttooo",
+        "subject": "Fwd: Re: notification",
+        "id": 1550765993,
         "type": "EMAIL",
-        "body": "helppp",
-        "timestamp": "2025-03-11T15:39:41.966712",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "persona@catmail.com, monika@catmail.com",
-        "sender": "fatima@catmail.com",
-        "subject": "Re: prova filmalissisjjdssjsj",
-        "type": "EMAIL",
-        "body": "\n---- Messaggio originale ----\nsjdsjkdajkjassassjkjsj\n\nrispostaaaaaaa",
-        "timestamp": "2025-03-11T16:32:11.182021",
+        "body": "\n---- Messaggio originale ----\n\n25616",
+        "timestamp": "2025-03-12T17:55:51.885504600",
         "status": "LETTO"
     }
 ]

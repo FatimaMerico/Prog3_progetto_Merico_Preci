@@ -6,14 +6,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.layout.HBox?>
+
 <VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.progiii.client.client.MessageController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
-
 
     <HBox>
         <Label text="A:                " style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
@@ -28,6 +27,9 @@
     <VBox>
         <Label text="Messaggio:  " style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
         <TextArea fx:id="messageBody" promptText="Scrivi il tuo messaggio..." HBox.hgrow="ALWAYS" />
+    </VBox>
+    <VBox alignment="CENTER">
+        <Label fx:id="statusLabel" text=" " />
     </VBox>
 
     <HBox spacing="30" alignment="BOTTOM_CENTER">

@@ -62,18 +62,12 @@ public class ReplyController {
                 System.out.println("Receiver aggiunto: " + rec);
             }
         }
-
         recipients.add(sender); // Aggiungiamo sempre il mittente originale
 
         // Uniamo tutti i destinatari separati da virgola
         String tutti = String.join(", ", recipients);
-
-
-        System.out.println("RispondiATutti: " + tutti);
-
         openMessageScene(tutti, "Re: " + selectedEmail.optString("subject", "Senza oggetto"));
     }
-
 
     @FXML
     private void HandleInoltra() throws IOException {

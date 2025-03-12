@@ -10,15 +10,6 @@ import java.io.IOException;
 public class Client extends Application {
 
     private static Stage primaryStage;
-    private static String userEmail;
-
-    public static void setUserEmail(String email) {
-        userEmail = email;
-    }
-
-    public static String getUserEmail() {
-        return userEmail;
-    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -52,8 +43,6 @@ public class Client extends Application {
 
         primaryStage.setScene(scene);
     }
-
-
 
     public static void main(String[] args) {
         launch();

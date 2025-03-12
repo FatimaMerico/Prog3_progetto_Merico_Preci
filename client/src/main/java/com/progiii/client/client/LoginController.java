@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.regex.Pattern;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
 public class LoginController {
@@ -46,7 +46,7 @@ public class LoginController {
             loginRequest.put("email", email);  // Aggiungiamo l'email
 
             // Invia l'oggetto JSON al server
-            out.println(loginRequest.toString());
+            out.println(loginRequest);
 
             // Leggi la risposta dal server
             String response = in.readLine();
@@ -65,11 +65,6 @@ public class LoginController {
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }
-
-
-
-
-
 
     private boolean isValidEmail(String email) {
         return Pattern.matches(EMAIL_REGEX, email);
@@ -92,59 +87,4 @@ public class LoginController {
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }
-
-    private void handleServerResponse(String jsonResponse) {
-        try {
-            JSONObject response = new JSONObject(jsonResponse);
-            String status = response.getString("status");
-            String message = response.getString("message");
-
-            if ("SUCCESS".equals(status)) {
-                statusLabel.setText("Successo: " + message);
-                statusLabel.setStyle("-fx-text-fill: green;");
-            } else if ("ERROR".equals(status)) {
-                statusLabel.setText("Errore: " + message);
-                statusLabel.setStyle("-fx-text-fill: red;");
-            }
-        } catch (JSONException e) {
-            statusLabel.setText("Errore nel formato del messaggio.");
-            statusLabel.setStyle("-fx-text-fill: red;");
-        }
-    }
-
-    private boolean isServerActive() {
-        try (Socket socket = new Socket("localhost", 12345)) {
-            return true; // Connessione riuscita
-        } catch (IOException e) {
-            return false; // Connessione fallita
-        }
-    }
-
-    private boolean authenticateWithServer(String email) {
-        try (Socket socket = new Socket("localhost", 12345);
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
-            out.println(email); // Invia l'email al server
-            System.out.println("CLIENT: Inviato email -> " + email); // Aggiungi un log per verificare l'invio dell'email
-
-            String response = in.readLine(); // Legge la risposta dal server
-            System.out.println("CLIENT: Ricevuto -> " + response); // Log per la risposta del server
-
-            if (response != null && response.contains("SUCCESS")) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-
-
-
-
 }

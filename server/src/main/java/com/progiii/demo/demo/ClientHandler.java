@@ -10,7 +10,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 public class ClientHandler implements Runnable {
@@ -19,20 +18,13 @@ public class ClientHandler implements Runnable {
     private BufferedReader in;
     private PrintWriter out;
     private String userEmail;
-    private static final String USERS_FILE = "/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/users.txt";
-    private boolean isLoggedIn = false;
-
-    private static final String BASE_PATH = "/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/";
-
+    private static final String USERS_FILE = "server/src/main/resources/com/progiii/demo/demo/users.txt";
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-    private static final ConcurrentHashMap<String, String> lastTimestamps = new ConcurrentHashMap<>();
 
     public ClientHandler(Socket socket, ServerController controller) {
         this.socket = socket;
         this.controller = controller;
     }
-
-
 
     @Override
     public void run() {
@@ -46,13 +38,10 @@ public class ClientHandler implements Runnable {
                 try {
                     JSONObject jsonRequest = new JSONObject(request);
                     String type = jsonRequest.getString("type");
-
-
                     switch (type) {
                         case "LOGIN":
                             String loginEmail = jsonRequest.getString("email");
                             controller.logMessage("Tentativo di login con email: " + loginEmail);
-
                             if (!isUserRegistered(loginEmail)) {
                                 sendError("Utente non registrato");
                             } else {
@@ -64,11 +53,8 @@ public class ClientHandler implements Runnable {
                                 markAllEmailsAsUnread(loginEmail);
                             }
                             break;
-
-
-
                         case "PING":
-                            handlePing(jsonRequest); ///ping invia  al client nuove mail inbox
+                            handlePing(jsonRequest); //ping invia  al client nuove mail inbox
                             break;
                         case "EMAIL":
                             controller.logMessage("case EMAIL");
@@ -110,7 +96,6 @@ public class ClientHandler implements Runnable {
         }
         return false;
     }
-
     //ping
     private void handlePing(JSONObject request) {
         try {
@@ -118,9 +103,10 @@ public class ClientHandler implements Runnable {
             String userEmail = request.getString("sender");
             if (!isValidEmail(userEmail)) {
                 sendError("Email non valido");
+                return;
             }
             String filename = userEmail.substring(0, userEmail.indexOf('@')) + ".json";
-            Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
+            Path filePath = Paths.get("server/src/main/resources/com/progiii/demo/demo/" + filename);
 
             if (!Files.exists(filePath)) {
                 out.println("[]"); // Se il file non esiste, invia un array vuoto
@@ -130,12 +116,10 @@ public class ClientHandler implements Runnable {
             // Leggi il contenuto del file JSON
             List<String> lines = Files.readAllLines(filePath);
             String content = String.join("", lines).trim();
-
             if (content.isEmpty()) {
                 out.println("[]");
                 return;
             }
-
             // Converti il contenuto in un array JSON
             JSONArray emailArray = new JSONArray(content);
             JSONArray unreadEmails = new JSONArray();
@@ -147,17 +131,13 @@ public class ClientHandler implements Runnable {
                     unreadEmails.put(email);
                     email.put("status", "LETTO"); // Aggiorna lo stato a LETTO
                 }
-
             }
-
             // Invia al client solo le email non lette
-            out.println(unreadEmails.toString());
+            out.println(unreadEmails);
             out.flush();
 
             // Sovrascrive il file con le email aggiornate
             Files.write(filePath, emailArray.toString(4).getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
-
-            //System.out.println("PING: Inviate " + unreadEmails.length() + " email non lette a " + userEmail);
 
         } catch (Exception e) {
             System.out.println("Errore nella gestione del PING: " + e.getMessage());
@@ -165,11 +145,14 @@ public class ClientHandler implements Runnable {
         }
     }
 
-
-    public void saveEmail(JSONObject emailData) {
+    private void saveEmail(JSONObject emailData) {
         try {
             System.out.println("Salvataggio email in corso...");
             System.out.println("Dati ricevuti: " + emailData.toString());
+
+            // Genera un ID univoco per l'email
+            int emailId = emailData.toString().hashCode();
+            emailData.put("id", emailId);
 
             // Estrai i destinatari e separali in un array
             String receivers = emailData.getString("receiver").toLowerCase();
@@ -180,10 +163,9 @@ public class ClientHandler implements Runnable {
                     System.out.println("Errore: indirizzo email non valido - " + receiver);
                     continue; // Passa al prossimo destinatario
                 }
-
                 // Formatta il nome del file
                 String filename = receiver.substring(0, receiver.indexOf('@')) + ".json";
-                filename = "/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename;
+                filename = "server/src/main/resources/com/progiii/demo/demo/" + filename;
                 System.out.println("Nome file destinazione: " + filename);
 
                 // Controlla se il destinatario è registrato
@@ -220,12 +202,6 @@ public class ClientHandler implements Runnable {
         }
     }
 
-
-
-
-
-
-
     private void handleDeleteRequest(JSONObject requestJson, PrintWriter out) {
         try {
             if (!requestJson.getString("type").equals("ELIMINA")) {
@@ -233,13 +209,12 @@ public class ClientHandler implements Runnable {
                 sendError("Tipo di richiesta non valido.");
                 return;
             }
-
             String richiedente = requestJson.getString("richiedente");
-            JSONObject emailDaCancellare = requestJson.getJSONObject("email_da_cancellare");
+            int emailId = requestJson.getInt("email_id");
 
             // Creiamo il nome del file JSON in base al richiedente
             String filename = richiedente.substring(0, richiedente.indexOf('@')) + ".json";
-            Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
+            Path filePath = Paths.get("server/src/main/resources/com/progiii/demo/demo/" + filename);
             System.out.println("Richiesta richiedente: " + richiedente);
             System.out.println("filepath: " + filePath);
             if (!Files.exists(filePath)) {
@@ -247,7 +222,6 @@ public class ClientHandler implements Runnable {
                 sendError("File utente non trovato.");
                 return;
             }
-
             // Leggere il file JSON
             String content = Files.readString(filePath);
             JSONArray emailArray = new JSONArray(content);
@@ -256,11 +230,7 @@ public class ClientHandler implements Runnable {
             boolean emailTrovata = false;
             for (int i = 0; i < emailArray.length(); i++) {
                 JSONObject email = emailArray.getJSONObject(i);
-
-                if (email.getString("sender").equals(emailDaCancellare.getString("sender")) &&
-                        email.getString("subject").equals(emailDaCancellare.getString("subject")) &&
-                        email.getString("body").equals(emailDaCancellare.getString("body"))) {
-
+                if (email.getInt("id") == emailId) {
                     emailArray.remove(i);
                     emailTrovata = true;
                     break;
@@ -286,8 +256,7 @@ public class ClientHandler implements Runnable {
     private void markAllEmailsAsUnread(String userEmail) {
         try {
             String filename = userEmail.substring(0, userEmail.indexOf('@')) + ".json";
-            Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
-
+            Path filePath = Paths.get("server/src/main/resources/com/progiii/demo/demo/" + filename);
             if (!Files.exists(filePath)) {
                 return; // Se il file non esiste, non c'è nulla da fare
             }
@@ -295,11 +264,9 @@ public class ClientHandler implements Runnable {
             // Leggi il contenuto del file JSON
             List<String> lines = Files.readAllLines(filePath);
             String content = String.join("", lines).trim();
-
             if (content.isEmpty()) {
                 return;
             }
-
             // Converti il contenuto in un array JSON
             JSONArray emailArray = new JSONArray(content);
 
@@ -308,10 +275,8 @@ public class ClientHandler implements Runnable {
                 JSONObject email = emailArray.getJSONObject(i);
                 email.put("status", "DA LEGGERE");
             }
-
             // Sovrascrive il file con le email aggiornate
             Files.write(filePath, emailArray.toString(4).getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
-
             System.out.println("LOGIN: Tutte le email di " + userEmail + " sono state impostate su 'DA LEGGERE'.");
 
         } catch (Exception e) {
@@ -320,20 +285,18 @@ public class ClientHandler implements Runnable {
         }
     }
 
-
-
     private void sendError(String message) {
         JSONObject response = new JSONObject();
         response.put("status", "ERROR");
         response.put("message", message);
-        out.println(response.toString());
+        out.println(response);
     }
 
     private void sendSuccess(String message) {
         JSONObject response = new JSONObject();
         response.put("status", "SUCCESS");
         response.put("message", message);
-        out.println(response.toString());
+        out.println(response);
     }
 
     private boolean isValidEmail(String email) {
