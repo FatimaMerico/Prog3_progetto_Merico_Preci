@@ -36,7 +36,7 @@ public class LoginController {
             return;
         }
 
-        try (Socket socket = new Socket("localhost", 12345);
+        try (Socket socket = new Socket("localhost", 3000);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 

@@ -1,5 +1,6 @@
 package com.progiii.client.client;
 
+import com.progiii.client.client.utils.NotificationManager;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -32,9 +33,9 @@ public class InboxController {
     @FXML private TableColumn<JSONObject, String> previewColumn;
     @FXML private Button sendButton;
     @FXML private Button deleteButton;
+    @FXML private Label notificationLabel; // Riferimento al Label per la notifica
 
     private static ObservableList<JSONObject> emailList = FXCollections.observableArrayList();
-
     private ScheduledExecutorService scheduler;
 
     public InboxController() {
@@ -55,17 +56,17 @@ public class InboxController {
         emailTable.setItems(emailList);
         startServerCheck();
 
-        // Aggiungiamo il Mouse Listener alla TableView
+        //Aggiungiamo il Mouse Listener alla TableView
         emailTable.setRowFactory(tv -> {
             TableRow<JSONObject> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty()) {
                     JSONObject selectedEmail = row.getItem();
-                    // Singolo click: abilita il pulsante di eliminazione
+                    //Singolo click: abilita il pulsante di eliminazione
                     if (event.getClickCount() == 1) {
                         deleteButton.setDisable(false);
                     }
-                    // Doppio click: apre la scena di risposta
+                    //Doppio click: apre la scena di risposta
                     if (event.getClickCount() == 2) {
                         openReplyScene(selectedEmail);
                     }
@@ -73,12 +74,30 @@ public class InboxController {
             });
             return row;
         });
+        //Ottieni l'istanza del NotificationManager
+        NotificationManager notificationManager = NotificationManager.getInstance();
+        //Osserva il NotificationManager per aggiornare la notifica
+        notificationManager.notificationMessageProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        notificationLabel.setText(newValue);
+                        notificationLabel.setVisible(true);
+                    } else {
+                        notificationLabel.setVisible(false);
+                    }
+                }
+        );
+        // Ripristina la notifica se è attiva
+        if (notificationManager.isNotificationActive()) {
+            notificationLabel.setText(notificationManager.notificationMessageProperty().get());
+            notificationLabel.setVisible(true);
+        }
     }
 
     private void startServerCheck() {
         scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
-            boolean serverOnline = checkServerConnection("localhost", 12345);
+            boolean serverOnline = checkServerConnection("localhost", 3000);
             Platform.runLater(() -> updateUI(serverOnline));
             if (serverOnline) fetchEmails();
         }, 0, 1, TimeUnit.SECONDS);
@@ -108,7 +127,7 @@ public class InboxController {
     }
 
     private void fetchEmails() {
-        try (Socket socket = new Socket("localhost", 12345);
+        try (Socket socket = new Socket("localhost", 3000);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              Scanner in = new Scanner(socket.getInputStream())) {
 
@@ -121,10 +140,8 @@ public class InboxController {
             // Lettura della risposta dal server (Lista di email)
             if (in.hasNextLine()) {
                 String response = in.nextLine();
-                //if(response.equals("[]")) return;
                 Platform.runLater(() -> handleServerResponse(response));
             }
-
         } catch (IOException e) {
             System.out.println("Errore ricezione email: " + e.getMessage());
         }
@@ -136,13 +153,14 @@ public class InboxController {
                 System.out.println("La risposta del server è vuota.");
                 return;
             }
-
             // Verifica se la risposta inizia con '[' (indica un JSONArray)
             if (response.trim().startsWith("[")) {
                 JSONArray emailArray = new JSONArray(response);
                 for (int i = 0; i < emailArray.length(); i++) {
                     JSONObject email = emailArray.getJSONObject(i);
                     emailList.add(email); // Aggiunge direttamente tutte le email ricevute
+                    // Notifica il NotificationManager
+                    NotificationManager.getInstance().showNotification("Nuova mail ricevuta!");
                 }
                 emailTable.refresh(); // Aggiorna la vista della tabella
             }
@@ -154,8 +172,7 @@ public class InboxController {
 
     @FXML
     private void HandleScrivi() throws IOException {
-        // Dopo aver inviato la mail, vogliamo ricaricare le email
-        Client.showMessageScene(userMail.getText());
+        Client.showMessageScene(userMail.getText());//Dopo aver inviato la mail, vogliamo ricaricare le email
     }
 
     @FXML
@@ -171,8 +188,7 @@ public class InboxController {
             System.out.println("Nessuna email selezionata per l'eliminazione.");
             return;
         }
-
-        try (Socket socket = new Socket("localhost", 12345);
+        try (Socket socket = new Socket("localhost", 3000);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
@@ -218,18 +234,17 @@ public class InboxController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("reply.fxml"));
             Parent root = loader.load();
 
-            // Ottenere il controller della nuova scena
+            //Prendiamo il controller della nuova scena
             ReplyController replyController = loader.getController();
 
-            // Passare i dettagli della mail selezionata alla Reply Scene
+            //Passare i dettagli della mail selezionata alla Reply Scene
             replyController.setReplyFields(email);
             replyController.setUserEmail(userMail.getText());
 
-            // Mostra la nuova scena
+            //Mostra la nuova scena
             Stage stage = (Stage) emailTable.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Errore nel caricamento della scena di risposta.");

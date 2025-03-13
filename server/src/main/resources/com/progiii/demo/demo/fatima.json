@@ -78,5 +78,35 @@
         "body": "66666666666666666666666666666",
         "timestamp": "2025-03-12T18:21:06.015507",
         "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "Re: prova CON notification",
+        "id": 1143500196,
+        "type": "EMAIL",
+        "body": "Messaggio ricevuto con notification",
+        "timestamp": "2025-03-13T14:39:19.061158400",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com, fatima@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "PROVA FINALE",
+        "id": -1337442833,
+        "type": "EMAIL",
+        "body": "si spera finalissima",
+        "timestamp": "2025-03-13T17:21:18.170791500",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "Re: Fwd: PROVA FINALE",
+        "id": 619125168,
+        "type": "EMAIL",
+        "body": "BLABLABLABLABLAAAAA",
+        "timestamp": "2025-03-13T17:39:01.329664800",
+        "status": "LETTO"
     }
 ]

@@ -38,5 +38,25 @@
         "body": "\n---- Messaggio originale ----\n\n25616",
         "timestamp": "2025-03-12T17:55:51.885504600",
         "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com, persona@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "prova senza notification",
+        "id": -1128281127,
+        "type": "EMAIL",
+        "body": "NO notification",
+        "timestamp": "2025-03-13T14:17:18.926310500",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com, fatima@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "PROVA FINALE",
+        "id": -1337442833,
+        "type": "EMAIL",
+        "body": "si spera finalissima",
+        "timestamp": "2025-03-13T17:21:18.170791500",
+        "status": "LETTO"
     }
 ]

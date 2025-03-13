@@ -9,8 +9,7 @@ public class NotificationManager {
     private final StringProperty notificationMessage = new SimpleStringProperty(); // Messaggio della notifica
     private long notificationEndTime = 0; // Tempo di scadenza della notifica
 
-    // Costruttore privato per impedire la creazione di istanze esterne
-    private NotificationManager() {}
+    private NotificationManager() {} //Costruttore privato per impedire la creazione di istanze esterne
 
     public static NotificationManager getInstance() {
         if (instance == null) {

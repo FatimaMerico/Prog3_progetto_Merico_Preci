@@ -1,10 +1,62 @@
-[{
-    "receiver": "persona@catmail.com",
-    "sender": "fatima@catmail.com",
-    "subject": "topperia",
-    "id": -1845002653,
-    "type": "EMAIL",
-    "body": "topppppp",
-    "timestamp": "2025-03-12T16:57:49.256003100",
-    "status": "LETTO"
-}]
+[
+    {
+        "receiver": "persona@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "topperia",
+        "id": -1845002653,
+        "type": "EMAIL",
+        "body": "topppppp",
+        "timestamp": "2025-03-12T16:57:49.256003100",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com, persona@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "prova senza notification",
+        "id": -1128281127,
+        "type": "EMAIL",
+        "body": "NO notification",
+        "timestamp": "2025-03-13T14:17:18.926310500",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "persona@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "prova CON notification",
+        "id": 758398392,
+        "type": "EMAIL",
+        "body": "prova CON notification",
+        "timestamp": "2025-03-13T14:38:54.431568300",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "persona@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "Re: Re: prova CON notification",
+        "id": 1882954482,
+        "type": "EMAIL",
+        "body": "OKKKKKKKK",
+        "timestamp": "2025-03-13T14:39:47.445894300",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "persona@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "22222222",
+        "id": 1642369897,
+        "type": "EMAIL",
+        "body": "222222222222222222",
+        "timestamp": "2025-03-13T14:46:49.517487700",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "persona@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "Fwd: PROVA FINALE",
+        "id": 1272740667,
+        "type": "EMAIL",
+        "body": "\n---- Messaggio originale ----\nsi spera finalissima",
+        "timestamp": "2025-03-13T17:37:53.128110800",
+        "status": "LETTO"
+    }
+]
