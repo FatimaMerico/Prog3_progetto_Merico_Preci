@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import org.json.JSONObject;
-
+/**
+ * Controller per la scena del messaggio
+ * Gestisce la composizione e l'invio delle email
+ */
 public class MessageController {
     @FXML private TextField toField;
     @FXML private TextField subjectField;
@@ -16,11 +19,21 @@ public class MessageController {
     @FXML private Label statusLabel;
 
     private String userEmail;
-
+    /**
+     * Imposta l'email dell'utente
+     * @param email l'email dell'utente
+     */
     public void setUserEmail(String email) {
         this.userEmail = email;
     }
 
+    /**
+     * Imposta i campi del messaggio
+     * @param sender il mittente
+     * @param recipients i destinatari
+     * @param subject l'oggetto
+     * @param message il corpo del messaggio
+     */
     public void setFields(String sender, String recipients, String subject, String message) {
         this.userEmail = sender;
         toField.setText(recipients);
@@ -28,11 +41,17 @@ public class MessageController {
         messageBody.setText(message);
     }
 
+    /**
+     * Gestisce l'azione del pulsante "Indietro"
+     * @throws IOException se si verifica un errore durante il caricamento della scena
+     */
     @FXML
     private void HandleIndietro() throws IOException {
         Client.showInboxScene(userEmail);
     }
-
+    /**
+     * Gestisce l'azione del pulsante "Invia"
+     */
     @FXML
     private void HandleInvia() {
         try (Socket socket = new Socket("localhost", 3000);

@@ -23,7 +23,10 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * Controller per la scena della inbox
+ * Gestisce la visualizzazione delle email e le interazioni con il server
+ */
 public class InboxController {
     @FXML private Label userMail;
     @FXML private Label connectionStatus;
@@ -37,13 +40,17 @@ public class InboxController {
 
     private static ObservableList<JSONObject> emailList = FXCollections.observableArrayList();
     private ScheduledExecutorService scheduler;
-
+    /**
+     * Costruttore della classe InboxController
+     */
     public InboxController() {
         if (emailList == null) {
             emailList = FXCollections.observableArrayList();
         }
     }
-
+    /**
+     * Metodo di inizializzazione della scena
+     */
     @FXML
     public void initialize() {
         senderColumn.setCellValueFactory(cellData ->
@@ -93,7 +100,9 @@ public class InboxController {
             notificationLabel.setVisible(true);
         }
     }
-
+    /**
+     * Avvia il controllo periodico dello stato del server
+     */
     private void startServerCheck() {
         scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
@@ -102,7 +111,12 @@ public class InboxController {
             if (serverOnline) fetchEmails();
         }, 0, 1, TimeUnit.SECONDS);
     }
-
+    /**
+     * Controlla la connessione al server
+     * @param host l'host del server
+     * @param port la porta del server
+     * @return true se il server è online, false altrimenti
+     */
     private boolean checkServerConnection(String host, int port) {
         try (Socket socket = new Socket(host, port)) {
             emailTable.refresh();
@@ -111,7 +125,10 @@ public class InboxController {
             return false;
         }
     }
-
+    /**
+     * Aggiorna l'interfaccia utente in base allo stato del server
+     * @param serverOnline true se il server è online, false altrimenti
+     */
     private void updateUI(boolean serverOnline) {
         if (serverOnline) {
             connectionStatus.setText("Server Connesso");
@@ -125,7 +142,9 @@ public class InboxController {
             deleteButton.setDisable(true);
         }
     }
-
+    /**
+     * Recupera le email dal server
+     */
     private void fetchEmails() {
         try (Socket socket = new Socket("localhost", 3000);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -146,7 +165,10 @@ public class InboxController {
             System.out.println("Errore ricezione email: " + e.getMessage());
         }
     }
-
+    /**
+     * Gestisce la risposta del server
+     * @param response la risposta del server
+     */
     private void handleServerResponse(String response) {
         try {
             if (response.trim().isEmpty()) {
@@ -169,18 +191,27 @@ public class InboxController {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Gestisce l'azione del pulsante "Scrivi"
+     * @throws IOException se si verifica un errore durante il caricamento della scena
+     */
     @FXML
     private void HandleScrivi() throws IOException {
         Client.showMessageScene(userMail.getText());//Dopo aver inviato la mail, vogliamo ricaricare le email
     }
-
+    /**
+     * Gestisce l'azione del pulsante "Logout"
+     * @throws IOException se si verifica un errore durante il caricamento della scena
+     */
     @FXML
     private void HandleLogout() throws IOException {
         emailList.clear();
         Client.showLoginScene();
     }
-
+    /**
+     * Gestisce l'azione del pulsante "Elimina"
+     * @trows IOException se si verifica un errore durante la comunicazione con il server
+     */
     @FXML
     private void HandleElimina() {
         JSONObject selectedEmail = emailTable.getSelectionModel().getSelectedItem();
@@ -227,7 +258,10 @@ public class InboxController {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Apre la scena di risposta
+     * @param email l'email selezionata
+     */
     @FXML
     private void openReplyScene(JSONObject email) {
         try {
@@ -250,7 +284,10 @@ public class InboxController {
             System.out.println("Errore nel caricamento della scena di risposta.");
         }
     }
-
+    /**
+     * Imposta l'email dell'utente
+     * @param email l'email dell'utente
+     */
     public void setUserEmail(String email) {
         userMail.setText(email);
     }

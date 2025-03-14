@@ -12,7 +12,10 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
+/**
+ * Gestisce le richieste dei client connessi al server
+ * Implementa l'interfaccia Runnable per gestire ogni client in un thread separato
+ */
 public class ClientHandler implements Runnable {
     private Socket socket;
     private static ServerController controller;
@@ -23,12 +26,20 @@ public class ClientHandler implements Runnable {
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private final Map<String, Object> fileLocks; //Mappa di lock per ogni file .json
 
+    /**
+     * Costruttore della classe ClientHandler
+     * @param socket il socket del client
+     * @param controller il controller del server
+     * @param fileLocks la mappa dei lock per i file .json
+     */
     public ClientHandler(Socket socket, ServerController controller, Map<String, Object> fileLocks) {
         this.socket = socket;
         this.controller = controller;
         this.fileLocks = fileLocks;
     }
-
+    /**
+     * Metodo principale che gestisce le richieste del client
+     */
     @Override
     public void run() {
         try {
@@ -72,7 +83,10 @@ public class ClientHandler implements Runnable {
             }
         }
     }
-
+    /**
+     * Gestisce la richiesta di login
+     * @param jsonRequest la richiesta di login in formato JSON
+     */
     private void handleLogin(JSONObject jsonRequest) {
         String loginEmail = jsonRequest.getString("email");
         controller.logMessage("Tentativo di login con email: " + loginEmail);
@@ -85,7 +99,10 @@ public class ClientHandler implements Runnable {
             markAllEmailsAsUnread(loginEmail);
         }
     }
-
+    /**
+     * Gestisce la richiesta di ping
+     * @param request la richiesta di ping in formato JSON
+     */
     private void handlePing(JSONObject request) {
         try {
             String userEmail = request.getString("sender");
@@ -131,7 +148,10 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Gestisce l'invio di una nuova email
+     * @param emailData i dati dell'email in formato JSON
+     */
     private void handleEmail(JSONObject emailData) {
         try {
             System.out.println("Salvataggio email in corso...");
@@ -173,7 +193,10 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Gestisce la richiesta di eliminazione di una email
+     * @param requestJson la richiesta di eliminazione in formato JSON
+     */
     private void handleDeleteRequest(JSONObject requestJson) {
         try {
             if (!requestJson.getString("type").equals("ELIMINA")) {
@@ -224,7 +247,10 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Imposta tutte le email di un utente come "DA LEGGERE"
+     * @param userEmail l'email dell'utente
+     */
     private void markAllEmailsAsUnread(String userEmail) {
         try {
             String filename = userEmail.substring(0, userEmail.indexOf('@')) + ".json";
@@ -256,25 +282,39 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Invia un messaggio di errore al client
+     * @param message il messaggio di errore
+     */
     private void sendError(String message) {
         JSONObject response = new JSONObject();
         response.put("status", "ERROR");
         response.put("message", message);
         out.println(response);
     }
-
+    /**
+     * Invia un messaggio di successo al client
+     * @param message il messaggio di successo
+     */
     private void sendSuccess(String message) {
         JSONObject response = new JSONObject();
         response.put("status", "SUCCESS");
         response.put("message", message);
         out.println(response);
     }
-
+    /**
+     * Verifica se un indirizzo email è valido
+     * @param email l'indirizzo da verificare
+     * @return true se l'indirizzo è valido, false altrimenti
+     */
     private boolean isValidEmail(String email) {
         return Pattern.matches(EMAIL_REGEX, email);
     }
-
+    /**
+     * Verifica se un utente è registrato
+     * @param email l'email dell'utente
+     * @return true se l'utente è registrato nel database (users.txt), false altrimenti
+     */
     private static boolean isUserRegistered(String email) {
         try (BufferedReader reader = new BufferedReader(new FileReader(USERS_FILE))) {
             String line;

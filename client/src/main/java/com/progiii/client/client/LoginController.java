@@ -15,7 +15,10 @@ import java.net.Socket;
 import java.util.regex.Pattern;
 
 import org.json.JSONObject;
-
+/**
+ * Controller per la scena di login
+ * Gestisce l'autenticazione dell'utente e la connessione al server
+ */
 public class LoginController {
 
     @FXML
@@ -25,7 +28,10 @@ public class LoginController {
     private Label statusLabel;
 
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-
+    /**
+     * Gestisce l'azione del pulsante "Login"
+     * @trows IOException se si verifica un errore durante la connessione al server
+     */
     @FXML
     public void handleLogin() {
         String email = emailField.getText().trim();
@@ -65,11 +71,18 @@ public class LoginController {
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }
-
+    /**
+     * Verifica se l'email è valida
+     * @param email l'email da verificare
+     * @return true se l'email è valida, false altrimenti
+     */
     private boolean isValidEmail(String email) {
         return Pattern.matches(EMAIL_REGEX, email);
     }
-
+    /**
+     * Cambia la scena alla inbox
+     * @param email l'email dell'utente
+     */
     private void changeSceneToInbox(String email) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("inbox.fxml"));

@@ -13,7 +13,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Controller per la scena di risposta
+ * Gestisce la risposta, la risposta a tutti e l'inoltro delle email
+ */
 public class ReplyController {
 
     @FXML private TextField daField;
@@ -25,10 +28,17 @@ public class ReplyController {
     private String userEmail;
     private JSONObject selectedEmail;
 
+    /**
+     * Imposta l'email dell'utente.
+     * @param email l'email dell'utente
+     */
     public void setUserEmail(String email) {
         this.userEmail = email;
     }
-
+    /**
+     * Imposta i campi della risposta.
+     * @param email l'email selezionata
+     */
     public void setReplyFields(JSONObject email) {
         this.selectedEmail = email;
         daField.setText(email.optString("sender", "Sconosciuto")); // Mittente è l'utente attuale
@@ -37,17 +47,26 @@ public class ReplyController {
         DataOraField.setText(email.optString("timestamp", "Data non disponibile"));
         messageBody.setText(email.optString("body", ""));
     }
-
+    /**
+     * Gestisce l'azione del pulsante "Indietro".
+     * @throws IOException se si verifica un errore durante il caricamento della scena
+     */
     @FXML
     private void HandleIndietro() throws IOException {
         Client.showInboxScene(userEmail);
     }
-
+    /**
+     * Gestisce l'azione del pulsante "Rispondi"
+     * @throws IOException se si verifica un errore durante il caricamento della scena
+     */
     @FXML
     private void HandleRispondi() throws IOException {
         openMessageScene(selectedEmail.optString("sender"), "Re: " + selectedEmail.optString("subject"));
     }
-
+    /**
+     * Gestisce l'azione del pulsante "Rispondi a tutti"
+     * @throws IOException se si verifica un errore durante il caricamento della scena
+     */
     @FXML
     private void HandleRispondiATutti() throws IOException {
         String sender = selectedEmail.optString("sender", "Sconosciuto");
@@ -68,12 +87,20 @@ public class ReplyController {
         String tutti = String.join(", ", recipients);
         openMessageScene(tutti, "Re: " + selectedEmail.optString("subject", "Senza oggetto"));
     }
-
+    /**
+     * Gestisce l'azione del pulsante "Inoltra"
+     * @throws IOException se si verifica un errore durante il caricamento della scena
+     */
     @FXML
     private void HandleInoltra() throws IOException {
         openMessageScene("", "Fwd: " + selectedEmail.optString("subject"));
     }
-
+    /**
+     * Apre la scena di messaggio con i dettagli dell'email
+     * @param recipients i destinatari
+     * @param subject l'oggetto
+     * @throws IOException se si verifica un errore durante il caricamento della scena
+     */
     private void openMessageScene(String recipients, String subject) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("message.fxml"));
         Parent root = loader.load();

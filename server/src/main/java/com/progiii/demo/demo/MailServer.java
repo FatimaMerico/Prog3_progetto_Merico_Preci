@@ -5,7 +5,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Gestisce il server di posta elettronica
+ * Implementa l'interfaccia Runnable per gestire il server in un thread separato
+ */
 public class MailServer implements Runnable {
     private static final int PORT = 3000;
     private ServerController controller;
@@ -13,18 +16,26 @@ public class MailServer implements Runnable {
     private boolean running = true;
     private static final Map<String, Object> fileLocks = new HashMap<>();//Mappa di lock per ogni file .json
 
+    /**
+     * Costruttore della classe MailServer.
+     * @param controller il controller del server
+     */
     public MailServer(ServerController controller) {
         this.controller = controller;
         initializeFileLocks(); //Inizializza i lock all'avvio del server
     }
 
-    //Inizializza i lock per ogni file .json
+    /**
+     * Inizializza i lock per ogni file .json
+     */
     private void initializeFileLocks() {
         fileLocks.put("fatima.json", new Object());
         fileLocks.put("monika.json", new Object());
         fileLocks.put("persona.json", new Object());
     }
-
+    /**
+     * Metodo principale che avvia il server (parte logica)
+     */
     @Override
     public void run() {
         try {
@@ -40,7 +51,9 @@ public class MailServer implements Runnable {
             controller.logMessage(e.getMessage());
         }
     }
-
+    /**
+     * Arresta il server (parte logica)
+     */
     public void stop() {
         running = false;
         try {
