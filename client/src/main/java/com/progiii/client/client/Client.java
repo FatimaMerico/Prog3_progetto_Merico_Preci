@@ -1,5 +1,7 @@
 package com.progiii.client.client;
 
+import com.progiii.client.client.controllers.InboxController;
+import com.progiii.client.client.controllers.MessageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -1,5 +1,6 @@
-package com.progiii.demo.demo;
+package com.progiii.demo.demo.models;
 
+import com.progiii.demo.demo.controllers.ServerController;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +22,6 @@ public class ClientHandler implements Runnable {
     private static ServerController controller;
     private BufferedReader in;
     private PrintWriter out;
-    private String userEmail;
     private static final String USERS_FILE = "server/src/main/resources/com/progiii/demo/demo/users.txt";
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private final Map<String, Object> fileLocks; //Mappa di lock per ogni file .json
@@ -93,7 +93,6 @@ public class ClientHandler implements Runnable {
         if (!isUserRegistered(loginEmail)) {
             sendError("Utente non registrato");
         } else {
-            userEmail = loginEmail;
             controller.logMessage("Accesso effettuato con successo per: " + loginEmail);
             sendSuccess("Accesso effettuato con successo per: " + loginEmail);
             markAllEmailsAsUnread(loginEmail);
@@ -166,7 +165,9 @@ public class ClientHandler implements Runnable {
             for (String receiver : receiverList) {
                 if (!receiver.contains("@")) {
                     System.out.println("Errore: indirizzo email non valido - " + receiver);
-                    continue;
+                    sendError("errore nell'indirizzo email: " + receiver);
+                    controller.logMessage("Errore nell'indirizzo email: non valido: " + receiver);
+                    return;
                 }
 
                 String filename = receiver.substring(0, receiver.indexOf('@')) + ".json";
@@ -186,10 +187,14 @@ public class ClientHandler implements Runnable {
                     emailArray.put(emailData);
                     Files.write(filePath, emailArray.toString(4).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
                     System.out.println("Email salvata con successo per " + receiver + " in " + filename);
+                    controller.logMessage("Email inviata con successo a " + receiver);
+
                 }
             }
+            sendSuccess("Email inviata con successo" );
         } catch (Exception e) {
             System.out.println("Errore nel salvataggio email: " + e.getMessage());
+            controller.logMessage("Errore nell'invio della mail: utente non trovato");
             e.printStackTrace();
         }
     }

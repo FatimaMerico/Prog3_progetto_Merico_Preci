@@ -1,4 +1,7 @@
-package com.progiii.demo.demo;
+package com.progiii.demo.demo.network;
+
+import com.progiii.demo.demo.controllers.ServerController;
+import com.progiii.demo.demo.models.ClientHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;

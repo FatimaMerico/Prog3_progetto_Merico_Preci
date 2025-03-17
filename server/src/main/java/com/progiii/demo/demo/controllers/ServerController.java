@@ -1,5 +1,6 @@
-package com.progiii.demo.demo;
+package com.progiii.demo.demo.controllers;
 
+import com.progiii.demo.demo.network.MailServer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

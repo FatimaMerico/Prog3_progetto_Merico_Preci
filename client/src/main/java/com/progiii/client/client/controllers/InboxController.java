@@ -1,5 +1,7 @@
-package com.progiii.client.client;
+package com.progiii.client.client.controllers;
 
+import com.progiii.client.client.Client;
+import com.progiii.client.client.models.InboxModel;
 import com.progiii.client.client.utils.NotificationManager;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,13 +15,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -40,10 +37,12 @@ public class InboxController {
 
     private static ObservableList<JSONObject> emailList = FXCollections.observableArrayList();
     private ScheduledExecutorService scheduler;
+    private InboxModel inboxModel;
     /**
      * Costruttore della classe InboxController
      */
     public InboxController() {
+        this.inboxModel = new InboxModel();
         if (emailList == null) {
             emailList = FXCollections.observableArrayList();
         }
@@ -81,6 +80,7 @@ public class InboxController {
             });
             return row;
         });
+
         //Ottieni l'istanza del NotificationManager
         NotificationManager notificationManager = NotificationManager.getInstance();
         //Osserva il NotificationManager per aggiornare la notifica
@@ -146,25 +146,10 @@ public class InboxController {
      * Recupera le email dal server
      */
     private void fetchEmails() {
-        try (Socket socket = new Socket("localhost", 3000);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             Scanner in = new Scanner(socket.getInputStream())) {
-
-            // Creazione della richiesta PING sotto forma di JSON
-            JSONObject pingRequest = new JSONObject();
-            pingRequest.put("type", "PING");
-            pingRequest.put("sender", userMail.getText());
-            // Invio della richiesta PING al server
-            out.println(pingRequest);
-            // Lettura della risposta dal server (Lista di email)
-            if (in.hasNextLine()) {
-                String response = in.nextLine();
-                Platform.runLater(() -> handleServerResponse(response));
-            }
-        } catch (IOException e) {
-            System.out.println("Errore ricezione email: " + e.getMessage());
-        }
+        String response = inboxModel.fetchEmails(userMail.getText());
+        Platform.runLater(() -> handleServerResponse(response));
     }
+
     /**
      * Gestisce la risposta del server
      * @param response la risposta del server
@@ -219,43 +204,9 @@ public class InboxController {
             System.out.println("Nessuna email selezionata per l'eliminazione.");
             return;
         }
-        try (Socket socket = new Socket("localhost", 3000);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
-            // Creiamo l'oggetto JSON per la richiesta
-            JSONObject deleteRequest = new JSONObject();
-            deleteRequest.put("type", "ELIMINA");
-            deleteRequest.put("richiedente", userMail.getText());
-
-            // Creiamo un oggetto per l'email da eliminare
-            JSONObject emailData = new JSONObject();
-            emailData.put("sender", selectedEmail.getString("sender"));
-            emailData.put("subject", selectedEmail.getString("subject"));
-            emailData.put("body", selectedEmail.getString("body"));
-            deleteRequest.put("email_da_cancellare", emailData);
-
-            // Invia il JSON al server
-            out.println(deleteRequest);
-            System.out.println("Richiesta di eliminazione inviata: " + deleteRequest);
-
-            // Leggi la risposta del server
-            String response = in.readLine();
-            if (response != null) {
-                System.out.println("Risposta del server: " + response);  // Stampa la risposta per il debug
-                if (response.contains("SUCCESS")) {
-                    // Se la risposta è positiva, rimuovi l'email dalla lista (UI)
-                    emailTable.getItems().remove(selectedEmail);
-                    System.out.println("Email eliminata con successo.");
-                } else {
-                    System.out.println("Errore nell'eliminazione dell'email.");
-                }
-            } else {
-                System.out.println("Nessuna risposta dal server.");
-            }
-        } catch (IOException e) {
-            System.out.println("Errore nella comunicazione con il server: " + e.getMessage());
-            e.printStackTrace();
+        boolean success = inboxModel.deleteEmails(userMail.getText(), selectedEmail.getInt("id"));
+        if (success) {
+            emailTable.getItems().remove(selectedEmail);
         }
     }
     /**
@@ -265,7 +216,7 @@ public class InboxController {
     @FXML
     private void openReplyScene(JSONObject email) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("reply.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/progiii/client/client/reply.fxml"));
             Parent root = loader.load();
 
             //Prendiamo il controller della nuova scena

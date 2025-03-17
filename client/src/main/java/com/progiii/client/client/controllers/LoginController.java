@@ -1,5 +1,6 @@
-package com.progiii.client.client;
+package com.progiii.client.client.controllers;
 
+import com.progiii.client.client.models.LoginModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,15 +20,19 @@ import org.json.JSONObject;
  * Controller per la scena di login
  * Gestisce l'autenticazione dell'utente e la connessione al server
  */
+
 public class LoginController {
 
     @FXML
     private TextField emailField;
-
     @FXML
     private Label statusLabel;
-
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    private LoginModel loginModel;
+
+    public LoginController() {
+        this.loginModel = new LoginModel();
+    }
     /**
      * Gestisce l'azione del pulsante "Login"
      * @trows IOException se si verifica un errore durante la connessione al server
@@ -37,37 +42,15 @@ public class LoginController {
         String email = emailField.getText().trim();
 
         if (!isValidEmail(email)) {
-            statusLabel.setText("Errore: Email non valida.");
+            statusLabel.setText("Errore login: Email non valida");
             statusLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        try (Socket socket = new Socket("localhost", 3000);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
-            // Creiamo l'oggetto JSON con l'email
-            JSONObject loginRequest = new JSONObject();
-            loginRequest.put("type", "LOGIN");
-            loginRequest.put("email", email);  // Aggiungiamo l'email
-
-            // Invia l'oggetto JSON al server
-            out.println(loginRequest);
-
-            // Leggi la risposta dal server
-            String response = in.readLine();
-            if (response != null) {
-                System.out.println(response);  // Stampa la risposta per il debug
-                if (response.contains("SUCCESS")) {
-                    changeSceneToInbox(email);
-                } else {
-                    statusLabel.setText("Errore: " + response);
-                    statusLabel.setStyle("-fx-text-fill: red;");
-                }
-            }
-
-        } catch (IOException e) {
-            statusLabel.setText("Errore di connessione: " + e.getMessage());
+        if (loginModel.validateLogin(email)) {
+            changeSceneToInbox(email);
+        }else {
+            statusLabel.setText("Errore login: email non registrata o Server spento");
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }
@@ -85,7 +68,7 @@ public class LoginController {
      */
     private void changeSceneToInbox(String email) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("inbox.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/progiii/client/client/inbox.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
 
             InboxController inboxController = fxmlLoader.getController();

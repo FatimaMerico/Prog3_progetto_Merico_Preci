@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Label?>
 
 <?import javafx.geometry.Insets?>
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.progiii.client.client.LoginController">
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.progiii.client.client.controllers.LoginController">
   <padding>
     <Insets top="20" right="20" bottom="20" left="20"/>
   </padding>

@@ -1,62 +1,52 @@
 [
     {
-        "receiver": "monika@catmail.com",
-        "sender": "fatima@catmail.com",
-        "subject": "mailssss",
-        "id": 1920543276,
+        "receiver": "monika@catmail.com,fatima@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "888888888888",
+        "id": 1618696471,
         "type": "EMAIL",
-        "body": "MAILSSS",
-        "timestamp": "2025-03-12T17:35:23.370981700",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com",
-        "sender": "fatima@catmail.com",
-        "subject": "notification",
-        "id": 796544445,
-        "type": "EMAIL",
-        "body": "NOTIFICATION",
-        "timestamp": "2025-03-12T17:54:08.714402500",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com",
-        "sender": "fatima@catmail.com",
-        "subject": "BLAAAAA",
-        "id": 256596953,
-        "type": "EMAIL",
-        "body": "BUIHSDUIV",
-        "timestamp": "2025-03-12T17:54:38.720679800",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com",
-        "sender": "fatima@catmail.com",
-        "subject": "Fwd: Re: notification",
-        "id": 1550765993,
-        "type": "EMAIL",
-        "body": "\n---- Messaggio originale ----\n\n25616",
-        "timestamp": "2025-03-12T17:55:51.885504600",
+        "body": "88888888888",
+        "timestamp": "2025-03-17T14:30:51.684819700",
         "status": "LETTO"
     },
     {
         "receiver": "monika@catmail.com, persona@catmail.com",
         "sender": "fatima@catmail.com",
-        "subject": "prova senza notification",
-        "id": -1128281127,
+        "subject": "Re: 888888888888",
+        "id": -551304758,
         "type": "EMAIL",
-        "body": "NO notification",
-        "timestamp": "2025-03-13T14:17:18.926310500",
+        "body": "\n---- Messaggio originale ----\n888888888889999999999999999999999",
+        "timestamp": "2025-03-17T14:31:13.703915300",
         "status": "LETTO"
     },
     {
-        "receiver": "monika@catmail.com, fatima@catmail.com",
-        "sender": "persona@catmail.com",
-        "subject": "PROVA FINALE",
-        "id": -1337442833,
+        "receiver": "monika@catmail.com , fattcahhs",
+        "sender": "fatima@catmail.com",
+        "subject": "sx",
+        "id": 158040416,
         "type": "EMAIL",
-        "body": "si spera finalissima",
-        "timestamp": "2025-03-13T17:21:18.170791500",
+        "body": "xs",
+        "timestamp": "2025-03-17T14:31:48.239890100",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com,persona@catmail.com,fatima@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "ddddddd",
+        "id": 318475229,
+        "type": "EMAIL",
+        "body": "dddddddd",
+        "timestamp": "2025-03-17T14:49:41.182193200",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com, fatima@catmail.com, fatima@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "Re: ddddddd",
+        "id": -1798616256,
+        "type": "EMAIL",
+        "body": "\n---- Messaggio originale ----\ndddddddd\nmannagghiaaaaa",
+        "timestamp": "2025-03-17T14:49:59.825067100",
         "status": "LETTO"
     }
 ]

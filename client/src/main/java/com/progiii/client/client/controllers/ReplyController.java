@@ -1,5 +1,6 @@
-package com.progiii.client.client;
+package com.progiii.client.client.controllers;
 
+import com.progiii.client.client.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -102,7 +103,7 @@ public class ReplyController {
      * @throws IOException se si verifica un errore durante il caricamento della scena
      */
     private void openMessageScene(String recipients, String subject) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("message.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/progiii/client/client/message.fxml"));
         Parent root = loader.load();
 
         // Otteniamo il controller della scena di messaggio

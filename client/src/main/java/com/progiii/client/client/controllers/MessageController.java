@@ -1,5 +1,7 @@
-package com.progiii.client.client;
+package com.progiii.client.client.controllers;
 
+import com.progiii.client.client.Client;
+import com.progiii.client.client.models.MessageModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,6 +21,7 @@ public class MessageController {
     @FXML private Label statusLabel;
 
     private String userEmail;
+    private MessageModel messageModel = new MessageModel();
     /**
      * Imposta l'email dell'utente
      * @param email l'email dell'utente
@@ -53,31 +56,28 @@ public class MessageController {
      * Gestisce l'azione del pulsante "Invia"
      */
     @FXML
-    private void HandleInvia() {
-        try (Socket socket = new Socket("localhost", 3000);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+    private void HandleInvia() throws IOException {
+        JSONObject email = new JSONObject();
+        email.put("type", "EMAIL");
+        email.put("sender", userEmail);
+        email.put("receiver", toField.getText());
+        email.put("subject", subjectField.getText());
+        email.put("body", messageBody.getText());
+        email.put("timestamp", java.time.LocalDateTime.now().toString());
+        email.put("status", "DA LEGGERE");
 
-            JSONObject email = new JSONObject();
-            email.put("type", "EMAIL");
-            email.put("sender", userEmail);
-            email.put("receiver", toField.getText());
-            email.put("subject", subjectField.getText());
-            email.put("body", messageBody.getText());
-            email.put("timestamp", java.time.LocalDateTime.now().toString());
-            email.put("status", "DA LEGGERE");
+        // Genera un ID univoco per l'email
+        int emailId = email.toString().hashCode();
+        email.put("id", emailId);
 
-            // Genera un ID univoco per l'email
-            int emailId = email.toString().hashCode();
-            email.put("id", emailId);
-
-            out.println(email);
-
+        boolean success = messageModel.sendEmail(email, statusLabel);
+        if (success) {
             System.out.println("Email inviata!");
             Client.showInboxScene(userEmail);
-        } catch (IOException e) {
-            statusLabel.setText("Errore invio email: server NON connesso (" + e.getMessage() + ")");
+        } else {
+            statusLabel.setText("Errore invio email: indirizzo NON valido");
             statusLabel.setStyle("-fx-text-fill: red;");
-            System.out.println("Errore invio email: " + e.getMessage());
+            System.out.println("Errore invio email.");
         }
     }
 }
