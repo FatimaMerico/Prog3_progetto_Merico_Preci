@@ -1,72 +1,72 @@
 [
     {
-        "receiver": "fatima@catmail.com",
+        "receiver": "monika@catmail.com, fatima@catmail.com",
         "sender": "persona@catmail.com",
-        "subject": "Re: prova CON notification",
-        "id": 1143500196,
+        "subject": "messaggio da persona",
+        "id": -2138946549,
         "type": "EMAIL",
-        "body": "Messaggio ricevuto con notification",
-        "timestamp": "2025-03-13T14:39:19.061158400",
+        "body": "qwertyuioop",
+        "timestamp": "2025-03-18T22:05:43.334655",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "Re: dmds",
+        "id": -2090324754,
+        "type": "EMAIL",
+        "body": "\n---- Messaggio originale ----\nckkskakaa\n\nrisposta",
+        "timestamp": "2025-03-18T22:07:20.668500",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "persona@catmail.com, fatima@catmail.com, persona@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "lsksm",
+        "id": 1447897124,
+        "type": "EMAIL",
+        "body": "fffffdss",
+        "timestamp": "2025-03-18T22:08:00.161584",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com, fatima@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "oggetto",
+        "id": -219863544,
+        "type": "EMAIL",
+        "body": "prova di mess",
+        "timestamp": "2025-03-19T08:19:48.122060",
         "status": "LETTO"
     },
     {
         "receiver": "fatima@catmail.com, persona@catmail.com",
         "sender": "monika@catmail.com",
-        "subject": "MODELSSSSS",
-        "id": 577545248,
+        "subject": "Re: oggetto",
+        "id": 981888679,
         "type": "EMAIL",
-        "body": "MODELSSSS",
-        "timestamp": "2025-03-16T20:30:11.279136",
+        "body": "\n---- Messaggio originale ----\nprova di mess\n\nrispondo a tutti",
+        "timestamp": "2025-03-19T08:19:58.706577",
         "status": "LETTO"
     },
     {
-        "receiver": "fatima@catmail.com,monika@catmail.com",
+        "receiver": "fatima@catmail.com , persona@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "sjsjs",
+        "id": 1813621603,
+        "type": "EMAIL",
+        "body": "xjsjajaj",
+        "timestamp": "2025-03-19T08:58:12.980990",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com, monika@catmail.com",
         "sender": "persona@catmail.com",
-        "subject": "probaaaas",
-        "id": -314346545,
+        "subject": "Re: sjsjs",
+        "id": 1749478379,
         "type": "EMAIL",
-        "body": "provassss",
-        "timestamp": "2025-03-17T14:22:38.622043900",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com,fatima@catmail.com",
-        "sender": "persona@catmail.com",
-        "subject": "888888888888",
-        "id": 1618696471,
-        "type": "EMAIL",
-        "body": "88888888888",
-        "timestamp": "2025-03-17T14:30:51.684819700",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com,persona@catmail.com,fatima@catmail.com",
-        "sender": "fatima@catmail.com",
-        "subject": "ddddddd",
-        "id": 318475229,
-        "type": "EMAIL",
-        "body": "dddddddd",
-        "timestamp": "2025-03-17T14:49:41.182193200",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com, fatima@catmail.com, fatima@catmail.com",
-        "sender": "persona@catmail.com",
-        "subject": "Re: ddddddd",
-        "id": -1798616256,
-        "type": "EMAIL",
-        "body": "\n---- Messaggio originale ----\ndddddddd\nmannagghiaaaaa",
-        "timestamp": "2025-03-17T14:49:59.825067100",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com, fatima@catmail.com, fatima@catmail.com",
-        "sender": "persona@catmail.com",
-        "subject": "Re: ddddddd",
-        "id": -1798616256,
-        "type": "EMAIL",
-        "body": "\n---- Messaggio originale ----\ndddddddd\nmannagghiaaaaa",
-        "timestamp": "2025-03-17T14:49:59.825067100",
+        "body": "\n---- Messaggio originale ----\nxjsjajaj\n\nprovaaa",
+        "timestamp": "2025-03-19T08:58:23.401204",
         "status": "LETTO"
     }
 ]

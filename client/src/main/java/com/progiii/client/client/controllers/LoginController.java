@@ -50,7 +50,7 @@ public class LoginController {
         if (loginModel.validateLogin(email)) {
             changeSceneToInbox(email);
         }else {
-            statusLabel.setText("Errore login: email non registrata o Server spento");
+            statusLabel.setText("Errore login: email non registrata");
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }

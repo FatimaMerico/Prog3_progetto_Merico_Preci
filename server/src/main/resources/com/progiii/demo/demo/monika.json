@@ -1,52 +1,52 @@
 [
     {
-        "receiver": "monika@catmail.com,fatima@catmail.com",
+        "receiver": "monika@catmail.com, fatima@catmail.com",
         "sender": "persona@catmail.com",
-        "subject": "888888888888",
-        "id": 1618696471,
+        "subject": "messaggio da persona",
+        "id": -2138946549,
         "type": "EMAIL",
-        "body": "88888888888",
-        "timestamp": "2025-03-17T14:30:51.684819700",
+        "body": "qwertyuioop",
+        "timestamp": "2025-03-18T22:05:43.334655",
         "status": "LETTO"
     },
     {
-        "receiver": "monika@catmail.com, persona@catmail.com",
-        "sender": "fatima@catmail.com",
-        "subject": "Re: 888888888888",
-        "id": -551304758,
-        "type": "EMAIL",
-        "body": "\n---- Messaggio originale ----\n888888888889999999999999999999999",
-        "timestamp": "2025-03-17T14:31:13.703915300",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com , fattcahhs",
-        "sender": "fatima@catmail.com",
-        "subject": "sx",
-        "id": 158040416,
-        "type": "EMAIL",
-        "body": "xs",
-        "timestamp": "2025-03-17T14:31:48.239890100",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com,persona@catmail.com,fatima@catmail.com",
-        "sender": "fatima@catmail.com",
-        "subject": "ddddddd",
-        "id": 318475229,
-        "type": "EMAIL",
-        "body": "dddddddd",
-        "timestamp": "2025-03-17T14:49:41.182193200",
-        "status": "LETTO"
-    },
-    {
-        "receiver": "monika@catmail.com, fatima@catmail.com, fatima@catmail.com",
+        "receiver": "monika@catmail.com",
         "sender": "persona@catmail.com",
-        "subject": "Re: ddddddd",
-        "id": -1798616256,
+        "subject": "Fwd: prova",
+        "id": 922473285,
         "type": "EMAIL",
-        "body": "\n---- Messaggio originale ----\ndddddddd\nmannagghiaaaaa",
-        "timestamp": "2025-03-17T14:49:59.825067100",
+        "body": "\n---- Messaggio originale ----\nmessaggioooooo\n\ninoltrato",
+        "timestamp": "2025-03-18T22:06:45.145762",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com",
+        "sender": "fatima@catmail.com",
+        "subject": "dmds",
+        "id": -1768739849,
+        "type": "EMAIL",
+        "body": "ckkskakaa",
+        "timestamp": "2025-03-18T22:07:10.579059",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "monika@catmail.com, fatima@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "oggetto",
+        "id": -219863544,
+        "type": "EMAIL",
+        "body": "prova di mess",
+        "timestamp": "2025-03-19T08:19:48.122060",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com, monika@catmail.com",
+        "sender": "persona@catmail.com",
+        "subject": "Re: sjsjs",
+        "id": 1749478379,
+        "type": "EMAIL",
+        "body": "\n---- Messaggio originale ----\nxjsjajaj\n\nprovaaa",
+        "timestamp": "2025-03-19T08:58:23.401204",
         "status": "LETTO"
     }
 ]

@@ -73,6 +73,7 @@ public class ReplyController {
         String sender = selectedEmail.optString("sender", "Sconosciuto");
         String receiver = selectedEmail.optString("receiver", "Sconosciuto");
 
+
         // Creiamo una lista e rimuoviamo il mittente se è uguale all'utente attuale
         List<String> recipients = new ArrayList<>();
         for (String rec : receiver.split(",")) {

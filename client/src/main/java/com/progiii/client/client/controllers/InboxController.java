@@ -104,7 +104,7 @@ public class InboxController {
      * Avvia il controllo periodico dello stato del server
      */
     private void startServerCheck() {
-        scheduler = Executors.newScheduledThreadPool(1);
+        scheduler = Executors.newScheduledThreadPool(3);
         scheduler.scheduleAtFixedRate(() -> {
             boolean serverOnline = checkServerConnection("localhost", 3000);
             Platform.runLater(() -> updateUI(serverOnline));

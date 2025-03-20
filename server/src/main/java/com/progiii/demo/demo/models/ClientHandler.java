@@ -22,7 +22,7 @@ public class ClientHandler implements Runnable {
     private static ServerController controller;
     private BufferedReader in;
     private PrintWriter out;
-    private static final String USERS_FILE = "server/src/main/resources/com/progiii/demo/demo/users.txt";
+    private static final String USERS_FILE = "/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/users.txt";
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private final Map<String, Object> fileLocks; //Mappa di lock per ogni file .json
 
@@ -110,15 +110,16 @@ public class ClientHandler implements Runnable {
                 return;
             }
             String filename = userEmail.substring(0, userEmail.indexOf('@')) + ".json";
-            Path filePath = Paths.get("server/src/main/resources/com/progiii/demo/demo/" + filename);
+            Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
+
+
+            if (!Files.exists(filePath)) {
+                out.println("[]");
+                return;
+            }
 
             // Sincronizza l'accesso al file .json
             synchronized (fileLocks.get(filename)) {
-                if (!Files.exists(filePath)) {
-                    out.println("[]");
-                    return;
-                }
-
                 List<String> lines = Files.readAllLines(filePath);
                 String content = String.join("", lines).trim();
                 if (content.isEmpty()) {
@@ -171,18 +172,22 @@ public class ClientHandler implements Runnable {
                 }
 
                 String filename = receiver.substring(0, receiver.indexOf('@')) + ".json";
-                Path filePath = Paths.get("server/src/main/resources/com/progiii/demo/demo/" + filename);
+                Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
 
+
+                JSONArray emailArray;
+
+                if (!Files.exists(filePath)) {
+                    controller.logMessage("filepath non valido esistente ");
+                    sendError("errore: file non valido");
+                    return;
+                }
                 // Sincronizza l'accesso al file .json
                 synchronized (fileLocks.get(filename)) {
-                    JSONArray emailArray;
-                    if (Files.exists(filePath)) {
-                        List<String> lines = Files.readAllLines(filePath);
-                        String content = String.join("", lines).trim();
-                        emailArray = content.isEmpty() ? new JSONArray() : new JSONArray(content);
-                    } else {
-                        emailArray = new JSONArray();
-                    }
+                    List<String> lines = Files.readAllLines(filePath);
+                    String content = String.join("", lines).trim();
+                    emailArray = content.isEmpty() ? new JSONArray() : new JSONArray(content);
+
 
                     emailArray.put(emailData);
                     Files.write(filePath, emailArray.toString(4).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
@@ -214,16 +219,16 @@ public class ClientHandler implements Runnable {
             int emailId = requestJson.getInt("email_id");
 
             String filename = richiedente.substring(0, richiedente.indexOf('@')) + ".json";
-            Path filePath = Paths.get("server/src/main/resources/com/progiii/demo/demo/" + filename);
+            Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
 
+
+            if (!Files.exists(filePath)) {
+                controller.logMessage("Errore: File utente non trovato.");
+                sendError("File utente non trovato.");
+                return;
+            }
             // Sincronizza l'accesso al file .json
             synchronized (fileLocks.get(filename)) {
-                if (!Files.exists(filePath)) {
-                    controller.logMessage("Errore: File utente non trovato.");
-                    sendError("File utente non trovato.");
-                    return;
-                }
-
                 String content = Files.readString(filePath);
                 JSONArray emailArray = new JSONArray(content);
 
@@ -259,14 +264,14 @@ public class ClientHandler implements Runnable {
     private void markAllEmailsAsUnread(String userEmail) {
         try {
             String filename = userEmail.substring(0, userEmail.indexOf('@')) + ".json";
-            Path filePath = Paths.get("server/src/main/resources/com/progiii/demo/demo/" + filename);
+            Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
 
             // Sincronizza l'accesso al file .json
-            synchronized (fileLocks.get(filename)) {
+
                 if (!Files.exists(filePath)) {
                     return;
                 }
-
+            synchronized (fileLocks.get(filename)) {
                 List<String> lines = Files.readAllLines(filePath);
                 String content = String.join("", lines).trim();
                 if (content.isEmpty()) {
