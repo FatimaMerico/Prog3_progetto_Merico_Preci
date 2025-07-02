@@ -27,7 +27,7 @@ public class LoginController {
     private TextField emailField;
     @FXML
     private Label statusLabel;
-    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@catmail\\.com$";
     private LoginModel loginModel;
 
     public LoginController() {
@@ -47,10 +47,13 @@ public class LoginController {
             return;
         }
 
-        if (loginModel.validateLogin(email)) {
+        if (loginModel.validateLogin(email) == 1) {
             changeSceneToInbox(email);
-        }else {
+        }else if ( loginModel.validateLogin(email) == 2) {
             statusLabel.setText("Errore login: email non registrata");
+            statusLabel.setStyle("-fx-text-fill: red;");
+        } else if (loginModel.validateLogin(email) == 3) {
+            statusLabel.setText("Server NON connesso");
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }

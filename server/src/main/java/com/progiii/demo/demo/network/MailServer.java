@@ -3,9 +3,13 @@ package com.progiii.demo.demo.network;
 import com.progiii.demo.demo.controllers.ServerController;
 import com.progiii.demo.demo.models.ClientHandler;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 /**
@@ -32,10 +36,25 @@ public class MailServer implements Runnable {
      * Inizializza i lock per ogni file .json
      */
     private void initializeFileLocks() {
-        fileLocks.put("fatima.json", new Object());
-        fileLocks.put("monika.json", new Object());
-        fileLocks.put("persona.json", new Object());
+        Path usersFile = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/users.txt");
+
+        try (BufferedReader reader = Files.newBufferedReader(usersFile)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String email = line.trim();
+                System.out.println("inizializzazione lock");
+                System.out.println(email);
+                if (email.contains("@")) {
+                    String username = email.substring(0, email.indexOf("@"));
+                    String jsonFileName = username + ".json";
+                    fileLocks.put(jsonFileName, new Object());
+                }
+            }
+        } catch (IOException e) {
+            controller.logMessage("Errore inizializzazione fileLocks: " + e.getMessage());
+        }
     }
+
     /**
      * Metodo principale che avvia il server (parte logica)
      */

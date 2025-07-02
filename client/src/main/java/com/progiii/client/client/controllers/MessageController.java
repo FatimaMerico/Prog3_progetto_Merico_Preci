@@ -9,6 +9,8 @@ import javafx.scene.control.TextArea;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.regex.Pattern;
+
 import org.json.JSONObject;
 /**
  * Controller per la scena del messaggio
@@ -19,6 +21,8 @@ public class MessageController {
     @FXML private TextField subjectField;
     @FXML private TextArea messageBody;
     @FXML private Label statusLabel;
+
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@catmail\\.com$";
 
     private String userEmail;
     private MessageModel messageModel = new MessageModel();
@@ -70,14 +74,23 @@ public class MessageController {
         int emailId = email.toString().hashCode();
         email.put("id", emailId);
 
-        boolean success = messageModel.sendEmail(email, statusLabel);
-        if (success) {
+
+
+        int success = messageModel.sendEmail(email, statusLabel);
+        if (success == 1) {
             System.out.println("Email inviata!");
             Client.showInboxScene(userEmail);
-        } else {
-            statusLabel.setText("Errore invio email: indirizzo NON valido");
+        } else if (success== 2){
+            statusLabel.setText("Errore invio email: utente non registrato");
+            statusLabel.setStyle("-fx-text-fill: red;");
+            System.out.println("Errore invio email.");
+        }
+        else if (success== 3){
+            statusLabel.setText("Errore invio email: email NON valida");
             statusLabel.setStyle("-fx-text-fill: red;");
             System.out.println("Errore invio email.");
         }
     }
+
+
 }

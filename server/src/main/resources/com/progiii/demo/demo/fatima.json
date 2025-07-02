@@ -68,5 +68,65 @@
         "body": "\n---- Messaggio originale ----\nxjsjajaj\n\nprovaaa",
         "timestamp": "2025-03-19T08:58:23.401204",
         "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "oggetto",
+        "id": 1370478095,
+        "type": "EMAIL",
+        "body": "prova di mess",
+        "timestamp": "2025-05-08T14:09:41.804418",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "snjs",
+        "id": 1719538706,
+        "type": "EMAIL",
+        "body": "jsjjsa",
+        "timestamp": "2025-05-08T14:10:25.886093",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com , prova@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "oggettt",
+        "id": -243481298,
+        "type": "EMAIL",
+        "body": "cjnjkcsjksxnma",
+        "timestamp": "2025-05-08T14:16:01.846773",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com , prova@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "cdsjkdcsbnjbcdsjk",
+        "id": -1240129734,
+        "type": "EMAIL",
+        "body": "sakjbxjsjbhjbhjcbd",
+        "timestamp": "2025-05-08T14:22:07.786611",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com, prova@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "kdskjsddankda",
+        "id": 826839406,
+        "type": "EMAIL",
+        "body": "provo esame",
+        "timestamp": "2025-05-08T15:12:23.327574",
+        "status": "LETTO"
+    },
+    {
+        "receiver": "fatima@catmail.com",
+        "sender": "monika@catmail.com",
+        "subject": "",
+        "id": 616256728,
+        "type": "EMAIL",
+        "body": "",
+        "timestamp": "2025-05-22T20:36:21.292064",
+        "status": "LETTO"
     }
 ]

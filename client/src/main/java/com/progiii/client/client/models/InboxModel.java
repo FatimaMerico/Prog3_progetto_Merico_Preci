@@ -32,13 +32,14 @@ public class InboxModel {
             // Invio della richiesta PING al server
             out.println(pingRequest);
             // Lettura della risposta dal server (Lista di email)
-            if (in.hasNextLine()) {
+
+            if (in.hasNext()) {
                 return in.nextLine();
             }
         } catch (IOException e) {
             System.out.println("Errore ricezione email: " + e.getMessage());
         }
-        return null;
+        return null ;
     }
 
     /**

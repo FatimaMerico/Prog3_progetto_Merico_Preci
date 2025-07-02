@@ -23,8 +23,8 @@ public class ClientHandler implements Runnable {
     private BufferedReader in;
     private PrintWriter out;
     private static final String USERS_FILE = "/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/users.txt";
-    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private final Map<String, Object> fileLocks; //Mappa di lock per ogni file .json
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@catmail\\.com$";
 
     /**
      * Costruttore della classe ClientHandler
@@ -105,10 +105,13 @@ public class ClientHandler implements Runnable {
     private void handlePing(JSONObject request) {
         try {
             String userEmail = request.getString("sender");
+
+
             if (!isValidEmail(userEmail)) {
                 sendError("Email non valido");
                 return;
             }
+
             String filename = userEmail.substring(0, userEmail.indexOf('@')) + ".json";
             Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
 
@@ -117,6 +120,7 @@ public class ClientHandler implements Runnable {
                 out.println("[]");
                 return;
             }
+
 
             // Sincronizza l'accesso al file .json
             synchronized (fileLocks.get(filename)) {
@@ -154,7 +158,6 @@ public class ClientHandler implements Runnable {
      */
     private void handleEmail(JSONObject emailData) {
         try {
-            System.out.println("Salvataggio email in corso...");
             System.out.println("Dati ricevuti: " + emailData.toString());
 
             int emailId = emailData.toString().hashCode();
@@ -164,16 +167,22 @@ public class ClientHandler implements Runnable {
             String[] receiverList = receivers.split("\\s*,\\s*");
 
             for (String receiver : receiverList) {
-                if (!receiver.contains("@")) {
-                    System.out.println("Errore: indirizzo email non valido - " + receiver);
-                    sendError("errore nell'indirizzo email: " + receiver);
-                    controller.logMessage("Errore nell'indirizzo email: non valido: " + receiver);
+
+                if (!isValidEmail(receiver)) {
+                    sendError("Email non valido");
+                    controller.logMessage( receiver + "email non valida");
+                    return;
+                }
+
+                if (!isUserRegistered(receiver)) {
+                    sendError("Utente non registrato");
+                    System.out.println(" Utente non registrato");
+                    controller.logMessage( receiver + "Utente non registrato");
                     return;
                 }
 
                 String filename = receiver.substring(0, receiver.indexOf('@')) + ".json";
                 Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
-
 
                 JSONArray emailArray;
 
@@ -182,6 +191,8 @@ public class ClientHandler implements Runnable {
                     sendError("errore: file non valido");
                     return;
                 }
+
+
                 // Sincronizza l'accesso al file .json
                 synchronized (fileLocks.get(filename)) {
                     List<String> lines = Files.readAllLines(filePath);
@@ -227,6 +238,7 @@ public class ClientHandler implements Runnable {
                 sendError("File utente non trovato.");
                 return;
             }
+
             // Sincronizza l'accesso al file .json
             synchronized (fileLocks.get(filename)) {
                 String content = Files.readString(filePath);
@@ -269,8 +281,16 @@ public class ClientHandler implements Runnable {
             // Sincronizza l'accesso al file .json
 
                 if (!Files.exists(filePath)) {
-                    return;
+                    try {
+                        Files.createFile(filePath); // crea il file vuoto
+                        Files.writeString(filePath, "[]"); // opzionale: inizializza con JSON vuoto
+                    } catch (IOException e) {
+                        controller.logMessage("Errore nella creazione del file: " + e.getMessage());
+                        return;
+                    }
                 }
+
+
             synchronized (fileLocks.get(filename)) {
                 List<String> lines = Files.readAllLines(filePath);
                 String content = String.join("", lines).trim();
@@ -312,14 +332,7 @@ public class ClientHandler implements Runnable {
         response.put("message", message);
         out.println(response);
     }
-    /**
-     * Verifica se un indirizzo email è valido
-     * @param email l'indirizzo da verificare
-     * @return true se l'indirizzo è valido, false altrimenti
-     */
-    private boolean isValidEmail(String email) {
-        return Pattern.matches(EMAIL_REGEX, email);
-    }
+
     /**
      * Verifica se un utente è registrato
      * @param email l'email dell'utente
@@ -338,4 +351,14 @@ public class ClientHandler implements Runnable {
         }
         return false;
     }
+
+    /**
+     * Verifica se l'email è valida
+     * @param email l'email da verificare
+     * @return true se l'email è valida, false altrimenti
+     */
+    private boolean isValidEmail(String email) {
+        return Pattern.matches(EMAIL_REGEX, email);
+    }
+
 }

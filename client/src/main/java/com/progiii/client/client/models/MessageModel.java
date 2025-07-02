@@ -19,7 +19,7 @@ public class MessageModel {
      * @param statusLabel la label per mostrare lo stato dell'invio
      * @return true se l'invio ha successo, false altrimenti
      */
-    public boolean sendEmail(JSONObject emailData, Label statusLabel) {
+    public int sendEmail(JSONObject emailData, Label statusLabel) {
         try (Socket socket = new Socket("localhost", 3000);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
@@ -31,15 +31,18 @@ public class MessageModel {
             if (response != null) {
                 System.out.println(response);
                 if (response.contains("SUCCESS")) {
-                    return true;
+                    return 1;
+                } else if (response.contains("Email non valido")) {
+                    return 3;
+                } else {
+                    return 2;
                 }
             }
         } catch (IOException e) {
             System.out.println("Errore invio email: " + e.getMessage());
             statusLabel.setText("Errore invio email: server NON connesso (" + e.getMessage() + ")");
             statusLabel.setStyle("-fx-text-fill: red;");
-            return false;
         }
-        return false;
+        return 0;
     }
 }

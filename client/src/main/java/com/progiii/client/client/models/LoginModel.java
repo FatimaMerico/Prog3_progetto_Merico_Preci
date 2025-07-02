@@ -16,7 +16,7 @@ public class LoginModel{
      * @param email l'email da verificare
      * @return true se l'email è valida e registrata, false altrimenti
      */
-    public boolean validateLogin(String email) {
+    public int validateLogin(String email) {
         try (Socket socket = new Socket("localhost", 3000);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
@@ -34,14 +34,16 @@ public class LoginModel{
             if (response != null) {
                 System.out.println(response);
                 if (response.contains("SUCCESS")) {
-                    return true;
+                    return 1;
+                } else {
+                    return 2; //utente non registrato
                 }
             }else {
                 System.out.println("Errore durante la lettura della risposta dal server nel login");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return 3;
         }
-        return false;
+        return 0;
     }
 }

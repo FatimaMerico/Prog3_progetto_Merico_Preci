@@ -156,7 +156,7 @@ public class InboxController {
      */
     private void handleServerResponse(String response) {
         try {
-            if (response.trim().isEmpty()) {
+            if (response == null || response.trim().isEmpty()) {
                 System.out.println("La risposta del server è vuota.");
                 return;
             }
@@ -182,7 +182,7 @@ public class InboxController {
      */
     @FXML
     private void HandleScrivi() throws IOException {
-        Client.showMessageScene(userMail.getText());//Dopo aver inviato la mail, vogliamo ricaricare le email
+        Client.showMessageScene(userMail.getText());
     }
     /**
      * Gestisce l'azione del pulsante "Logout"
