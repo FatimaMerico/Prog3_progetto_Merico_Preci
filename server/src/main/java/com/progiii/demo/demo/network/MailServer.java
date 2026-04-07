@@ -36,7 +36,7 @@ public class MailServer implements Runnable {
      * Inizializza i lock per ogni file .json
      */
     private void initializeFileLocks() {
-        Path usersFile = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/users.txt");
+        Path usersFile = Paths.get("/server/src/main/resources/com/progiii/demo/demo/users.txt");
 
         try (BufferedReader reader = Files.newBufferedReader(usersFile)) {
             String line;

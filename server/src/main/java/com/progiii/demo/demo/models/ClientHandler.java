@@ -22,7 +22,7 @@ public class ClientHandler implements Runnable {
     private static ServerController controller;
     private BufferedReader in;
     private PrintWriter out;
-    private static final String USERS_FILE = "/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/users.txt";
+    private static final String USERS_FILE = "/server/src/main/resources/com/progiii/demo/demo/users.txt";
     private final Map<String, Object> fileLocks; //Mappa di lock per ogni file .json
     private static final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@catmail\\.com$";
 
@@ -113,7 +113,7 @@ public class ClientHandler implements Runnable {
             }
 
             String filename = userEmail.substring(0, userEmail.indexOf('@')) + ".json";
-            Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
+            Path filePath = Paths.get("/server/src/main/resources/com/progiii/demo/demo/" + filename);
 
 
             if (!Files.exists(filePath)) {
@@ -182,7 +182,7 @@ public class ClientHandler implements Runnable {
                 }
 
                 String filename = receiver.substring(0, receiver.indexOf('@')) + ".json";
-                Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
+                Path filePath = Paths.get("/server/src/main/resources/com/progiii/demo/demo/" + filename);
 
                 JSONArray emailArray;
 
@@ -230,7 +230,7 @@ public class ClientHandler implements Runnable {
             int emailId = requestJson.getInt("email_id");
 
             String filename = richiedente.substring(0, richiedente.indexOf('@')) + ".json";
-            Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
+            Path filePath = Paths.get("/server/src/main/resources/com/progiii/demo/demo/" + filename);
 
 
             if (!Files.exists(filePath)) {
@@ -276,7 +276,7 @@ public class ClientHandler implements Runnable {
     private void markAllEmailsAsUnread(String userEmail) {
         try {
             String filename = userEmail.substring(0, userEmail.indexOf('@')) + ".json";
-            Path filePath = Paths.get("/Users/monikapreci/PROG_3_DEF/Prog3_progetto_Merico_Preci/server/src/main/resources/com/progiii/demo/demo/" + filename);
+            Path filePath = Paths.get("/server/src/main/resources/com/progiii/demo/demo/" + filename);
 
             // Sincronizza l'accesso al file .json
 
