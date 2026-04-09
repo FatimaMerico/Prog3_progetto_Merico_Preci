@@ -87,5 +87,13 @@ Il server e i client comunicano scambiandosi messaggi in formato **JSON** sulla 
 ### Esecuzione
 1.  **Avvia il Server:** Esegui il file `Server.java` situato nel modulo server. Clicca su "Start" nell'interfaccia grafica per mettere il server in ascolto sulla porta 3000. L'applicazione creerà e gestirà i file JSON degli utenti in automatico sfruttando percorsi relativi.
 2.  **Avvia i Client:** Esegui una o più istanze del file `Client.java` nel modulo client per simulare diversi utenti contemporaneamente.
-3.  **Accesso:** Effettua il login con una delle email registrate nel file `users.txt` e inizia a scambiare messaggi!
+3.  **Accesso:** Effettua il login con una delle email registrate nel file `users.txt` e inizia a scambiare messaggi
 
+---
+
+## © Copyright e Licenza
+Questo progetto è protetto da copyright. Tutti i diritti sono riservati.
+Nessuna parte di questo codice, design o architettura può essere riprodotta, distribuita o utilizzata a fini commerciali o personali senza l'esplicito consenso dell'autore.
+Il codice è reso pubblico esclusivamente a scopo di portfolio e valutazione.
+
+© 2025 [Fatima Merico, Monika Preci]
